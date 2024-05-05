@@ -264,3 +264,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitColor: 1
   selectionButton: {fileID: 7728284035872045319}
+  speed: 200
+  currentState: 0

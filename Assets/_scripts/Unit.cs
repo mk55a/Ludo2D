@@ -12,19 +12,44 @@ public class Unit : MonoBehaviour
     private Color unitColor;
     [SerializeField]
     private Button selectionButton;
-
+    [SerializeField]
+    private float speed ;
     public UnitState currentState;
 
 
     private List<Tile> tilesTraversed;
 
-    private List<Tile> tilesToBeTraversed; 
-
+    private List<Tile> tilesToBeTraversed;
+    private bool canMove;
+    int currentTraversalIndex;
     private void Start()
     {
         tilesTraversed = new List<Tile>();
         tilesToBeTraversed = new List<Tile>();
         SetState(UnitState.HOME);
+        currentTraversalIndex = 0;
+    }
+
+    private void Update()
+    {
+        if (!canMove) return;
+        Debug.Log("Unit is moving");
+        float step = speed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, tilesToBeTraversed[currentTraversalIndex].transform.position, step);
+        transform.SetParent(tilesToBeTraversed[currentTraversalIndex].transform);
+        if (Vector3.Distance(transform.position, tilesToBeTraversed[currentTraversalIndex].transform.position) < 0.001f)
+        {
+            Debug.LogWarning("Moved up by one");
+            tilesTraversed.Add(tilesToBeTraversed[currentTraversalIndex]);
+            currentTraversalIndex++;
+            if (currentTraversalIndex == tilesToBeTraversed.Count)
+            {
+                currentTraversalIndex = 0;
+                canMove = false;
+                tilesToBeTraversed.Clear();
+                //GameManager.instance.MoveEnd();
+            }
+        }
     }
 
     public void SetState(UnitState newState)
@@ -68,16 +93,30 @@ public class Unit : MonoBehaviour
         TraverseTiles();
     }
 
-    public void MoveToTile(Tile tile)
+    public void TraverseTiles()
     {
-        Debug.LogError(tile.transform.position);
-        transform.SetParent(tile.transform);
-        //Get the postion of the tile game object and move this game object there. 
-        StartCoroutine(MoveToTileCoroutine(tile.transform.position));
-        tilesTraversed.Add(tile);
+        Debug.Log("Going to traverse tiles");
+        if (tilesToBeTraversed.Count == 0) return;
+        canMove = true;
+        //StartCoroutine(TraversalTilesCoroutine());
     }
 
-    private IEnumerator MoveToTileCoroutine(Vector3 targetPosition)
+    public void GetTilesToTraverse()
+    {
+        tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], Dice.Instance.GetRoll());
+    }
+
+    /*public void MoveToTile(Tile tile)
+    {
+
+        Debug.LogError(tile.gameObject.name +"  "+ tile.transform.position);
+        transform.SetParent(tile.transform);
+        //Get the postion of the tile game object and move this game object there. 
+        //StartCoroutine(MoveToTileCoroutine(tile.transform.position));
+        tilesTraversed.Add(tile);
+    }*/
+
+    /*private IEnumerator MoveToTileCoroutine(Vector3 targetPosition)
     {
         float journeyLength = Vector3.Distance(transform.position, targetPosition);
         float startTime = Time.time;
@@ -94,14 +133,10 @@ public class Unit : MonoBehaviour
 
             yield return null;
         }
-    }
+    }*/
 
-    public void TraverseTiles()
-    {
-        Debug.Log("Going to traverse tiles");
-        StartCoroutine(TraversalTilesCoroutine());
-    }
-    private IEnumerator TraversalTilesCoroutine()
+    
+   /* private IEnumerator TraversalTilesCoroutine()
     {
         Debug.LogWarning("No of tiles to be traversed : " + tilesToBeTraversed.Count);
         foreach (Tile tile in tilesToBeTraversed)
@@ -112,10 +147,7 @@ public class Unit : MonoBehaviour
         }
         Debug.LogError("Clearing Traversal to be");
         tilesToBeTraversed.Clear();
-    }
+    }*/
 
-    public void GetTilesToTraverse()
-    {
-        tilesToBeTraversed =  TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], Dice.Instance.GetRoll());
-    }
+    
 }
