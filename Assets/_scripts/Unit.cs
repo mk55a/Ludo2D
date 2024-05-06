@@ -174,7 +174,7 @@ public class Unit : MonoBehaviour
 
     public void GetTilesToTraverse()
     {
-        tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], Dice.Instance.GetRoll()); 
+        tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], OldDice.Instance.GetRoll()); 
         foreach(var tile in tilesToBeTraversed)
         {
             Debug.LogError(tile.gameObject.name + " "+ tile.GetPositionIndex());

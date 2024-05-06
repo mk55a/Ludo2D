@@ -18,8 +18,8 @@ public class Home : MonoBehaviour
         activeUnits = new List<Unit>();
         atHomeUnits = new List<Unit>();
         finishedUnits = new List<Unit>();
-        Dice.Instance.OnDiceRolled += HandleDiceRolled;
-
+        OldDice.Instance.OnDiceRolled += HandleDiceRolled;
+        //Dice.OnRoll += HandleDiceRolled;
         foreach(UnitHolderBase holders in unitHolders)
         {
             Unit unit =holders.InstantiateUnit(unitPrefab);
@@ -67,7 +67,7 @@ public class Home : MonoBehaviour
         }
 
         Debug.Log("Handling dice roll");
-        if(roll == 6)
+        if(roll == 6 && atHomeUnits.Count>0)
         {
             foreach(var unit in atHomeUnits)
             {

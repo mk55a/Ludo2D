@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-public class Dice : MonoBehaviour
+public class OldDice : MonoBehaviour
 {
     public event Action<int> OnDiceRolled; 
-    public static Dice Instance { get; private set; }
+    public static OldDice Instance { get; private set; }
 
     [SerializeField] private int value;
     [SerializeField] private Button diceButton;
