@@ -266,3 +266,5 @@ MonoBehaviour:
   selectionButton: {fileID: 7728284035872045319}
   speed: 200
   currentState: 0
+  tilesTraversed: []
+  tilesToBeTraversed: []

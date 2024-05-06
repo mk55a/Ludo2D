@@ -8,6 +8,7 @@ public class TileManager : MonoBehaviour
     public static TileManager Instance { get; private set; }
 
     [SerializeField] private List<Tile> tiles;
+    [SerializeField] public GameObject inMovementParent;
     private bool diceRolled;
 
 
@@ -31,30 +32,35 @@ public class TileManager : MonoBehaviour
 
         
     }
-    public List<Tile> GetUnitsTileTraversal(Tile tile, int roll)
+    public List<Tile> GetUnitsTileTraversal(Tile currentTile, int roll)
     {
         //add the dice roll value to the tile's position index and return the tile with the resulting postion index and the other tiles in between the current tile and the resulting tile.
         //if current tile position index is one and roll on dice is 5 add, 1+5 which 6 so return a list of tile with tiles of position index, 2,3,4,5,6
-        int currentIndex = tile.GetPositionIndex();
+        int currentIndex = currentTile.GetPositionIndex();
         int targetIndex = currentIndex + roll;
         Debug.LogError("TARGET INDEX : " + targetIndex);
         List<Tile> traversalTiles = new List<Tile>();
         Debug.LogWarning("CURRENT TILE INDEX : " + currentIndex);
+
+        List<Tile> eligibleTiles = new List<Tile>();
         foreach (Tile t in tiles)
         {
             int tilePosIndex = t.GetPositionIndex();
             
-            if (tile.GetTileType() != TileType.END)
+            if (t.GetTileType() != TileType.END && tilePosIndex > currentIndex && tilePosIndex <= targetIndex)
             {
-                if(tilePosIndex > currentIndex && tilePosIndex <= targetIndex)
-                {
-                    Debug.Log(tilePosIndex);
-                    traversalTiles.Add(tile);
-                    
-                }
+                Debug.Log(tilePosIndex);
+                eligibleTiles.Add(t);
+                //traversalTiles.Add(t);
             }
         }
+        if(eligibleTiles.Count > 1)
+        {
+            eligibleTiles.Sort((a, b) => a.GetPositionIndex().CompareTo(b.GetPositionIndex()));
+        }
+        traversalTiles.AddRange(eligibleTiles);
         Debug.Log("Tile to traverse : "+traversalTiles.Count);
+
         return traversalTiles;
     }
 }
