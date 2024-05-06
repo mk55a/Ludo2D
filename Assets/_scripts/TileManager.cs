@@ -32,7 +32,7 @@ public class TileManager : MonoBehaviour
 
         
     }
-    public List<Tile> GetUnitsTileTraversal(Tile currentTile, int roll)
+    public List<Tile> GetUnitsTileTraversal(Tile currentTile, int roll)//, int count)
     {
         //add the dice roll value to the tile's position index and return the tile with the resulting postion index and the other tiles in between the current tile and the resulting tile.
         //if current tile position index is one and roll on dice is 5 add, 1+5 which 6 so return a list of tile with tiles of position index, 2,3,4,5,6
@@ -50,7 +50,15 @@ public class TileManager : MonoBehaviour
             if (t.GetTileType() != TileType.END && tilePosIndex > currentIndex && tilePosIndex <= targetIndex)
             {
                 Debug.Log(tilePosIndex);
+                
+                /*count++;
+                Debug.Log("New Count: " + count);
+                if (count >= 51)
+                {
+
+                }*/
                 eligibleTiles.Add(t);
+
                 //traversalTiles.Add(t);
             }
         }
