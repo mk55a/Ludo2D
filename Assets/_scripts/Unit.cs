@@ -63,7 +63,7 @@ public class Unit : MonoBehaviour
         }
         else if (currentState == UnitState.ONBOARD)
         {
-            GetTilesToTraverse();
+            //GetTilesToTraverse();
         }
 
         TraverseTiles();
@@ -134,9 +134,9 @@ public class Unit : MonoBehaviour
         }
     }
     
-    public void GetTilesToTraverse()//(int traversedCount)
+    public void GetTilesToTraverse(int traversedCount)
     {
-        tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], OldDice.Instance.GetRoll()); 
+        tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], OldDice.Instance.GetRoll());//, GetTilesTraversedCount()); 
         foreach(var tile in tilesToBeTraversed)
         {
             Debug.LogError(tile.gameObject.name + " "+ tile.GetPositionIndex());
@@ -148,7 +148,14 @@ public class Unit : MonoBehaviour
         return tilesTraversed.Count;
     }
 
-    
+    public Tile GetCurrentTile()
+    {
+        return tilesTraversed[tilesTraversed.Count - 1];
+    }
 
+    public Color GetUnitColor()
+    {
+        return unitColor;
+    }
     
 }

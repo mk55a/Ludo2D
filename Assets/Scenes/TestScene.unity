@@ -123,6 +123,145 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &390730
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2049614547}
+    m_Modifications:
+    - target: {fileID: 7562764488209457869, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_Name
+      value: Unit - Blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 68.9186
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 67.6499
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -67.57994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -270.95142
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3623864403780930383, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 1353310129}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7562764488209457869, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 390734}
+  m_SourcePrefab: {fileID: 100100000, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+--- !u!224 &390731 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8767952871578401034, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+  m_PrefabInstance: {fileID: 390730}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &390732 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3623864403780930383, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+  m_PrefabInstance: {fileID: 390730}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &390733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7562764488209457869, guid: 3b7e0ec55629584418f8eb7c09e912ec, type: 3}
+  m_PrefabInstance: {fileID: 390730}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &390734
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390733}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 31141ef8edfb07540ad892356948a4ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6252519
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,7 +1029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 32
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &64438098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,7 +1600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 31
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &130976225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1665,8 +1804,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionIndex: 0
-  tileType: 0
-  tileColor: 0
+  tileType: 1
+  tileColor: 2
 --- !u!1 &150277226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,8 +2276,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionIndex: 0
-  tileType: 0
-  tileColor: 0
+  tileType: 1
+  tileColor: 2
 --- !u!1 &204861904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,7 +3948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 6
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &353978499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3901,7 +4040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 25
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &368399692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3993,7 +4132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 18
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &382199424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4189,7 +4328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 20
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &401266237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4239,6 +4378,7 @@ GameObject:
   - component: {fileID: 404654409}
   - component: {fileID: 404654411}
   - component: {fileID: 404654410}
+  - component: {fileID: 404654412}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -4304,6 +4444,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 404654408}
   m_CullTransparentMesh: 1
+--- !u!95 &404654412
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404654408}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ea3b289e851df1b40b5144f2fd2d22ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &411919416
 GameObject:
   m_ObjectHideFlags: 0
@@ -5006,7 +5167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 17
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &474879789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5329,7 +5490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 23
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &495106084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5652,9 +5813,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7396f799c84d7b4086a1b3f8704fb07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionIndex: 26
+  positionIndex: 52
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &509291474
 GameObject:
   m_ObjectHideFlags: 0
@@ -6294,8 +6455,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionIndex: 0
-  tileType: 0
-  tileColor: 0
+  tileType: 1
+  tileColor: 2
 --- !u!1 &600558799
 GameObject:
   m_ObjectHideFlags: 0
@@ -6679,7 +6840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 5
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &652307060
 GameObject:
   m_ObjectHideFlags: 0
@@ -6847,7 +7008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 34
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &671570903
 GameObject:
   m_ObjectHideFlags: 0
@@ -6937,7 +7098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 30
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &671670703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7615,7 +7776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 42
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &725101204
 GameObject:
   m_ObjectHideFlags: 0
@@ -7707,7 +7868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 39
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &727163677
 GameObject:
   m_ObjectHideFlags: 0
@@ -8968,7 +9129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 11
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &884297493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9133,7 +9294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 48
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &912627264
 GameObject:
   m_ObjectHideFlags: 0
@@ -9501,7 +9662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 16
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &931578477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9980,7 +10141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 4
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &974788321
 GameObject:
   m_ObjectHideFlags: 0
@@ -10145,6 +10306,55 @@ RectTransform:
   m_AnchoredPosition: {x: -136, y: 68}
   m_SizeDelta: {x: 65.8325, y: 66.6501}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &998464458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 998464460}
+  - component: {fileID: 998464459}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &998464459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998464458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad9e17d77f1fc543929372055da472f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  homes:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!4 &998464460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998464458}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 856.99603, y: -765.218, z: -342.32254}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1002373753
 GameObject:
   m_ObjectHideFlags: 0
@@ -10808,7 +11018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 26
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1064366298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10900,7 +11110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 15
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1065178548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10950,6 +11160,7 @@ GameObject:
   - component: {fileID: 1069821225}
   - component: {fileID: 1069821227}
   - component: {fileID: 1069821226}
+  - component: {fileID: 1069821228}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -11015,6 +11226,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1069821224}
   m_CullTransparentMesh: 1
+--- !u!95 &1069821228
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069821224}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ea3b289e851df1b40b5144f2fd2d22ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1075720850
 GameObject:
   m_ObjectHideFlags: 0
@@ -11068,7 +11300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 29
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1075720853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11198,7 +11430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 3
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1082540860
 GameObject:
   m_ObjectHideFlags: 0
@@ -11290,7 +11522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 46
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1095173677
 GameObject:
   m_ObjectHideFlags: 0
@@ -11419,7 +11651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 24
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1118398390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11903,7 +12135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 21
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1156475316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12465,7 +12697,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 37
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1221693940
 GameObject:
   m_ObjectHideFlags: 0
@@ -12519,7 +12751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 13
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1221693943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13027,7 +13259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 38
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1265037360
 GameObject:
   m_ObjectHideFlags: 0
@@ -13286,7 +13518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 50
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1292017812
 GameObject:
   m_ObjectHideFlags: 0
@@ -13452,8 +13684,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionIndex: 0
-  tileType: 0
-  tileColor: 0
+  tileType: 1
+  tileColor: 2
 --- !u!1 &1295818766
 GameObject:
   m_ObjectHideFlags: 0
@@ -14118,7 +14350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 19
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1345785100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14232,6 +14464,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352270643}
+  m_CullTransparentMesh: 1
+--- !u!1 &1353310128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1353310129}
+  - component: {fileID: 1353310131}
+  - component: {fileID: 1353310130}
+  m_Layer: 5
+  m_Name: Image (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1353310129
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353310128}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 390732}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1.3858, y: 1.4577}
+  m_SizeDelta: {x: 16.5372, y: 7.9484}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1353310130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353310128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9622642, g: 0.677034, b: 0.077162705, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 6e884a7a97ab49f43830d2c8e7707e20, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1353310131
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353310128}
   m_CullTransparentMesh: 1
 --- !u!1 &1369646598
 GameObject:
@@ -14416,7 +14723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 44
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1372989132
 GameObject:
   m_ObjectHideFlags: 0
@@ -14866,7 +15173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 8
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1399565471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15125,7 +15432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 12
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1428381968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15293,7 +15600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 7
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1439184650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15626,8 +15933,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionIndex: 40
-  tileType: 0
-  tileColor: 0
+  tileType: 2
+  tileColor: 2
 --- !u!1 &1482851074
 GameObject:
   m_ObjectHideFlags: 0
@@ -16162,7 +16469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 2
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1519967942
 GameObject:
   m_ObjectHideFlags: 0
@@ -16708,7 +17015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 41
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1560914038
 GameObject:
   m_ObjectHideFlags: 0
@@ -16875,7 +17182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 49
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1594436134
 GameObject:
   m_ObjectHideFlags: 0
@@ -17534,7 +17841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 36
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1644125249
 GameObject:
   m_ObjectHideFlags: 0
@@ -18001,7 +18308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 45
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1674553903
 GameObject:
   m_ObjectHideFlags: 0
@@ -19760,7 +20067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 47
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1876015583
 GameObject:
   m_ObjectHideFlags: 0
@@ -19852,7 +20159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 33
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1878629997
 GameObject:
   m_ObjectHideFlags: 0
@@ -19981,7 +20288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 10
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1888363769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20111,7 +20418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 35
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1912874890
 GameObject:
   m_ObjectHideFlags: 0
@@ -20383,7 +20690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 28
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &1968157845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20513,7 +20820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 43
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &1997172259
 GameObject:
   m_ObjectHideFlags: 0
@@ -20904,7 +21211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionIndex: 0
-  tileType: 0
+  tileType: 1
   tileColor: 0
 --- !u!1 &2031129949
 GameObject:
@@ -21165,8 +21472,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   positionIndex: 0
-  tileType: 0
-  tileColor: 0
+  tileType: 1
+  tileColor: 2
 --- !u!1 &2049614543
 GameObject:
   m_ObjectHideFlags: 0
@@ -21265,6 +21572,7 @@ RectTransform:
   - {fileID: 2139744984}
   - {fileID: 1636978930}
   - {fileID: 1521318288}
+  - {fileID: 390731}
   - {fileID: 799948546}
   - {fileID: 1535281955}
   m_Father: {fileID: 0}
@@ -21494,7 +21802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 22
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &2077632524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21586,7 +21894,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 9
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!114 &2114418257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21716,7 +22024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionIndex: 51
   tileType: 0
-  tileColor: 0
+  tileColor: 4
 --- !u!1 &2139744983
 GameObject:
   m_ObjectHideFlags: 0
@@ -21881,3 +22189,4 @@ SceneRoots:
   - {fileID: 1915099016}
   - {fileID: 240273211}
   - {fileID: 898892222}
+  - {fileID: 998464460}
