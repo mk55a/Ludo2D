@@ -9,7 +9,7 @@ public class OldDice : MonoBehaviour
     public static OldDice Instance { get; private set; }
 
     [SerializeField] private int value;
-    [SerializeField] private Button diceButton;
+    [SerializeField] public Button diceButton;
 
     private int roll;
 
@@ -34,6 +34,7 @@ public class OldDice : MonoBehaviour
     {
         Debug.Log("DICE ROLLed");
         roll = value;
+        diceButton.interactable = false;
         OnDiceRolled?.Invoke(roll);
     }
 

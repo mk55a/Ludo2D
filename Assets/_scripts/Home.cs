@@ -28,6 +28,7 @@ public class Home : MonoBehaviour
             Unit unit =holders.InstantiateUnit(unitPrefab);
 
             unit.OnStateChanged += HandleUnitStateChanged;
+            unit.OnSelectionHandled += OnMoveComplete;
            
         }
         ChangeTurn();
@@ -101,6 +102,12 @@ public class Home : MonoBehaviour
         {
             EnableActiveUnitSelection();
         }
+    }
+
+    private void OnMoveComplete()
+    {
+        DisableUnitSelection();
+        OldDice.Instance.diceButton.interactable = true; 
     }
 
     

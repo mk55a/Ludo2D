@@ -5,8 +5,8 @@ using System;
 using UnityEngine.UI;
 public class Unit : MonoBehaviour
 {
-    public event Action<Unit, UnitState> OnStateChanged; 
-
+    public event Action<Unit, UnitState> OnStateChanged;
+    public event Action OnSelectionHandled; 
 
     [SerializeField]
     private Color unitColor;
@@ -92,7 +92,7 @@ public class Unit : MonoBehaviour
         Debug.Log("Going to traverse tiles");
         canMove = true;
         StartCoroutine(TraversalTilesCoroutine());
-        
+        OnSelectionHandled?.Invoke();
     }
 
     private IEnumerator TraversalTilesCoroutine()
