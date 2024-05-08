@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
@@ -13,9 +14,49 @@ public class Tile : MonoBehaviour
 
     [SerializeField] private GameObject gridLayoutContainer;
 
+
+
+
+
+    [Tooltip("CommonProperties")]
+    [SerializeField]
+    private Color32 blue;
+    [SerializeField]
+    private Color32 red;
+    [SerializeField]
+    private Color32 yellow;
+    [SerializeField]
+    private Color32 green;
+    [SerializeField]
+    private Color32 white;
+
+
+    [SerializeField]
+    private Image tileImage;
+
+    [SerializeField]
+    private Image safeImage;
+
     private void Awake()
     {
+        SetTileProperties();
         unitsOnTile = new List<Unit>();
+        
+    }
+
+    private void SetTileProperties()
+    {
+        switch (tileColor)
+        {
+            case TileColor.BLUE:
+                tileImage.color = blue;
+                break;
+        }
+
+        if (tileType == TileType.SAFE)
+        {
+            safeImage.gameObject.SetActive(true);
+        }
     }
 
     public void AddUnit(Unit unit)
