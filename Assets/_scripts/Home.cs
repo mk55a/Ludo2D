@@ -7,12 +7,13 @@ public class Home : MonoBehaviour
     [SerializeField] private List<UnitHolderBase> unitHolders;
     [SerializeField] private Color homeColor;
     [SerializeField] private GameObject unitPrefab;
+    [SerializeField] private Animator animator; 
 
     public List<Unit> activeUnits;
     public List<Unit> atHomeUnits;
     public List<Unit> finishedUnits;
 
-    private bool isTurn =true; 
+    public bool isTurn =true; 
     private void Start()
     {
         activeUnits = new List<Unit>();
@@ -27,6 +28,7 @@ public class Home : MonoBehaviour
             unit.OnStateChanged += HandleUnitStateChanged;
            
         }
+        ChangeTurn();
     }
 
     private void HandleUnitStateChanged(Unit unit , UnitState newState)
@@ -58,7 +60,12 @@ public class Home : MonoBehaviour
         }
     }
 
+    
 
+    private void ChangeTurn()
+    {
+        animator.SetTrigger("IsTurn");
+    }
     private void HandleDiceRolled(int roll)
     {
         if (!isTurn)
@@ -69,9 +76,13 @@ public class Home : MonoBehaviour
         Debug.Log("Handling dice roll");
         if(roll == 6 && atHomeUnits.Count>0)
         {
-            foreach(var unit in atHomeUnits)
+            foreach (var unit in atHomeUnits)
             {
-                unit.EnableSelection();
+                if (unit != null)
+                {
+                    unit.EnableSelection();
+                }
+                
             }
         }
         else

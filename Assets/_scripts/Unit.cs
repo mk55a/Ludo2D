@@ -10,8 +10,10 @@ public class Unit : MonoBehaviour
 
     [SerializeField]
     private Color unitColor;
+
     [SerializeField]
     private Button selectionButton;
+
     [SerializeField]
     private float speed ;
     public UnitState currentState;
@@ -22,6 +24,12 @@ public class Unit : MonoBehaviour
     public List<Tile> tilesToBeTraversed;
     private bool canMove;
     int currentTraversalIndex;
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     private void Start()
     {
         tilesTraversed = new List<Tile>();
@@ -47,11 +55,14 @@ public class Unit : MonoBehaviour
     {
         Debug.Log("Can be selected " + currentState);
         selectionButton.interactable = true;
-        HandleSelection();
+        selectionButton.onClick.AddListener(HandleSelection);
+
+        //HandleSelection();
     }
 
     public void DisableSelection()
     {
+        selectionButton.onClick.RemoveListener(HandleSelection);
         selectionButton.interactable = false;
     }
 
