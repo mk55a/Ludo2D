@@ -13,6 +13,8 @@ public class Unit : MonoBehaviour
 
     [SerializeField]
     private Button selectionButton;
+    [SerializeField]
+    private GameObject selectionUI;
 
     [SerializeField]
     private float speed ;
@@ -26,6 +28,7 @@ public class Unit : MonoBehaviour
     int currentTraversalIndex;
     private Animator animator;
 
+    Vector3 originalScale;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -36,6 +39,7 @@ public class Unit : MonoBehaviour
         tilesToBeTraversed = new List<Tile>();
         SetState(UnitState.HOME);
         currentTraversalIndex = 0;
+        originalScale= transform.localScale;
     }
 
     private void Update()
@@ -55,7 +59,8 @@ public class Unit : MonoBehaviour
     {
         Debug.Log("Can be selected " + currentState);
         selectionButton.interactable = true;
-        selectionButton.onClick.AddListener(HandleSelection);
+        selectionUI.SetActive(true);
+        //selectionButton.onClick.AddListener(HandleSelection);
 
         //HandleSelection();
     }
@@ -64,6 +69,7 @@ public class Unit : MonoBehaviour
     {
         selectionButton.onClick.RemoveListener(HandleSelection);
         selectionButton.interactable = false;
+        selectionUI.SetActive(false);
     }
 
     public void HandleSelection()
@@ -74,7 +80,7 @@ public class Unit : MonoBehaviour
         }
         else if (currentState == UnitState.ONBOARD)
         {
-            //GetTilesToTraverse();
+            GetTilesToTraverse();
         }
 
         TraverseTiles();
@@ -86,24 +92,33 @@ public class Unit : MonoBehaviour
         Debug.Log("Going to traverse tiles");
         canMove = true;
         StartCoroutine(TraversalTilesCoroutine());
+        
     }
 
     private IEnumerator TraversalTilesCoroutine()
     {
-        if (!canMove)
+        if (!canMove || tilesToBeTraversed.Count == 0)
         {
             yield break;
         }
-        if (tilesTraversed.Count >= 51)
+
+        /*if (tilesTraversed.Count >= 51)
         {
             tilesToBeTraversed.Clear();
             //tilesToBeTraversed = 
+        }*/
+        if(tilesTraversed.Count != 0)
+        {
+            tilesTraversed[tilesTraversed.Count - 1].RemoveUnit(this);
         }
+        
+
         for(currentTraversalIndex =0; currentTraversalIndex<tilesToBeTraversed.Count; currentTraversalIndex++)
         {
+            Debug.LogError(tilesToBeTraversed.Count + " Current " + currentTraversalIndex);
             transform.SetParent(TileManager.Instance.inMovementParent.transform);
-            Vector3 originalScale = transform.localScale;
-            transform.localScale *= 1.2f;
+
+            ChangeScale();
 
             Vector3 targetPosition = tilesToBeTraversed[currentTraversalIndex].transform.position;
             
@@ -118,21 +133,25 @@ public class Unit : MonoBehaviour
                 transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsedTime/journeyTime);   
                 yield return null;
             }
+
+            SetToOriginalSize();
             
-            transform.localScale = originalScale;
-            transform.SetParent(tilesToBeTraversed[currentTraversalIndex].transform);
+            //transform.SetParent(tilesToBeTraversed[currentTraversalIndex].transform);
 
 
             tilesTraversed.Add(tilesToBeTraversed[currentTraversalIndex]);
             Debug.LogWarning("Moved up by one");
 
             
-            yield return new WaitForSeconds(0.65f);
+            yield return new WaitForSeconds(0.325f);
 
         }
-
+        Debug.Log("MovementISDONE");
+        
+        tilesToBeTraversed[tilesToBeTraversed.Count - 1].AddUnit(this);
         tilesToBeTraversed.Clear();
         canMove = false;
+
     }
 
     public void GetFirstTileOnBoard()
@@ -145,7 +164,7 @@ public class Unit : MonoBehaviour
         }
     }
     
-    public void GetTilesToTraverse(int traversedCount)
+    public void GetTilesToTraverse()
     {
         tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], OldDice.Instance.GetRoll());//, GetTilesTraversedCount()); 
         foreach(var tile in tilesToBeTraversed)
@@ -169,4 +188,15 @@ public class Unit : MonoBehaviour
         return unitColor;
     }
     
+    private void SetToOriginalSize()
+    {
+        transform.localScale = originalScale;
+        Debug.Log("RevertedBackToOrigianlSize");
+    }
+
+    private void ChangeScale()
+    {
+        transform.localScale *= 1.2f;
+        Debug.Log("ChangedScale");
+    }
 }

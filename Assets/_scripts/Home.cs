@@ -7,13 +7,15 @@ public class Home : MonoBehaviour
     [SerializeField] private List<UnitHolderBase> unitHolders;
     [SerializeField] private Color homeColor;
     [SerializeField] private GameObject unitPrefab;
-    [SerializeField] private Animator animator; 
+    [SerializeField] private Animator animator;
+    [SerializeField] private GameObject selectableUI;
 
     public List<Unit> activeUnits;
     public List<Unit> atHomeUnits;
     public List<Unit> finishedUnits;
 
-    public bool isTurn =true; 
+    public bool isTurn;
+    
     private void Start()
     {
         activeUnits = new List<Unit>();
@@ -29,6 +31,19 @@ public class Home : MonoBehaviour
            
         }
         ChangeTurn();
+    }
+
+
+    private void Update()
+    {
+        /*if(isTurn)
+        {
+           animator.i
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }*/
     }
 
     private void HandleUnitStateChanged(Unit unit , UnitState newState)
@@ -60,36 +75,72 @@ public class Home : MonoBehaviour
         }
     }
 
-    
-
+   
     private void ChangeTurn()
     {
         animator.SetTrigger("IsTurn");
     }
+
+
     private void HandleDiceRolled(int roll)
     {
         if (!isTurn)
         {
+            DisableUnitSelection();
             return;
         }
 
         Debug.Log("Handling dice roll");
-        if(roll == 6 && atHomeUnits.Count>0)
+        
+        if(roll == 6)
         {
-            foreach (var unit in atHomeUnits)
-            {
-                if (unit != null)
-                {
-                    unit.EnableSelection();
-                }
-                
-            }
+            EnableHomeUnitSelection();
+            EnableActiveUnitSelection();
         }
         else
         {
-            foreach(var unit in activeUnits)
+            EnableActiveUnitSelection();
+        }
+    }
+
+    
+    private void EnableHomeUnitSelection()
+    {
+        if (atHomeUnits.Count != 0)
+        {
+            foreach (var unit in atHomeUnits)
             {
                 unit.EnableSelection();
+            }
+        }
+    }
+    private void EnableActiveUnitSelection()
+    {
+        if (activeUnits.Count != 0)
+        {
+            foreach (var unit in activeUnits)
+            {
+                unit.EnableSelection();
+            }
+        }
+    }
+
+
+    private void DisableUnitSelection()
+    {
+        if (atHomeUnits.Count != 0)
+        {
+            foreach (var unit in atHomeUnits)
+            {
+                unit.DisableSelection();
+            }
+        }
+
+        if (activeUnits.Count != 0)
+        {
+            foreach (var unit in activeUnits)
+            {
+                unit.DisableSelection();
             }
         }
     }
