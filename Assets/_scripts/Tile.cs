@@ -51,6 +51,18 @@ public class Tile : MonoBehaviour
             case TileColor.BLUE:
                 tileImage.color = blue;
                 break;
+            case TileColor.RED:
+                tileImage.color = red;
+                break;
+            case TileColor.GREEN:
+                tileImage.color = green;
+                break;
+            case TileColor.YELLOW:
+                tileImage.color = yellow;
+                break;
+            case TileColor.WHITE:
+                tileImage.color = white;
+                break;
         }
 
         if (tileType == TileType.SAFE)
