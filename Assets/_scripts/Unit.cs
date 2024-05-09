@@ -156,7 +156,7 @@ public class Unit : MonoBehaviour
 
     public void GetFirstTileOnBoard()
     {
-        tilesToBeTraversed = TileManager.Instance.GetBlueStart();
+        tilesToBeTraversed = TileManager.Instance.GetStartTile(this);
         if (tilesToBeTraversed != null)
         {
             Debug.Log("HOME to ONBOARD, Getting bLue Start");
@@ -167,6 +167,7 @@ public class Unit : MonoBehaviour
     public void GetTilesToTraverse()
     {
         tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], OldDice.Instance.GetRoll());//, GetTilesTraversedCount()); 
+        //tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(this);
         foreach(var tile in tilesToBeTraversed)
         {
             Debug.LogError(tile.gameObject.name + " "+ tile.GetPositionIndex());

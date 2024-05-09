@@ -12,7 +12,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] public GameObject inMovementParent;
     private bool diceRolled;
 
-
+    private int maximumIndex =52;
     private void Awake()
     {
         if(Instance == null)
@@ -23,6 +23,7 @@ public class TileManager : MonoBehaviour
 
     private void Start()
     {
+        
         //Dice.Instance.OnDiceRolled += HandleDiceRolled;
     }
 
@@ -30,9 +31,14 @@ public class TileManager : MonoBehaviour
     {
         Debug.LogWarning(tiles.Where(tile => tile.GetTileColor() == TileColor.BLUE && tile.GetTileType() == TileType.SAFE).ToList().Count); //Return the tile which is of BLUE TileColor and SAFE TileType   
         return tiles.Where(tile => tile.GetTileColor() == TileColor.BLUE && tile.GetTileType() == TileType.SAFE).ToList();
-
-        
     }
+
+    public List<Tile> GetStartTile(Unit unit)
+    {
+        return tiles.Where(tile => tile.GetTileColor() == ConvertColorToTileColor(unit.GetUnitColor()) && tile.GetTileType() == TileType.SAFE).ToList();
+    }
+
+
     public List<Tile> GetUnitsTileTraversal(Tile currentTile, int roll)
     {
         //add the dice roll value to the tile's position index and return the tile with the resulting postion index and the other tiles in between the current tile and the resulting tile.
@@ -42,6 +48,10 @@ public class TileManager : MonoBehaviour
 
         int currentIndex = currentTile.GetPositionIndex();
         int targetIndex = currentIndex + roll;
+        if(targetIndex > maximumIndex)
+        {
+            targetIndex -= maximumIndex;
+        }
         Debug.LogError("TARGET INDEX : " + targetIndex);
         List<Tile> traversalTiles = new List<Tile>();
         Debug.LogWarning("CURRENT TILE INDEX : " + currentIndex);
@@ -54,17 +64,9 @@ public class TileManager : MonoBehaviour
             if (t.GetTileType() != TileType.END && tilePosIndex > currentIndex && tilePosIndex <= targetIndex)
             {
                 Debug.Log(tilePosIndex);
-
                 
-                /*count++;
-                Debug.Log("New Count: " + count);
-                if (count >= 51)
-                {
-
-                }*/
                 eligibleTiles.Add(t);
 
-                //traversalTiles.Add(tile);
             }
         }
         if(eligibleTiles.Count > 1)

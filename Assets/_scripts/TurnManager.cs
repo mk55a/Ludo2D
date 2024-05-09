@@ -42,12 +42,12 @@ public class TurnManager : MonoBehaviour
         {
             if(i == currentHomeIndex)
             {
-                inGameHomes[i].isTurn = true;
+                inGameHomes[i].ChangeTurn(true);
                 
             }
             else
             {
-                inGameHomes[i].isTurn = false;
+                inGameHomes[i].ChangeTurn(false);
                 
             }
         }
@@ -57,7 +57,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndTurn(bool isSixRolled)
     {
-        inGameHomes[currentHomeIndex].isTurn = false;
+        inGameHomes[currentHomeIndex].ChangeTurn(false);
         
 
         if (!isSixRolled)

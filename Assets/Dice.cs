@@ -12,22 +12,23 @@ public class Dice : MonoBehaviour
 
     private Rigidbody2D rb;
     [SerializeField]Animator animator;
-    [SerializeField] Vector2 _forceMin = new Vector2(0, 350);
-    [SerializeField] Vector2 _forceMax = new Vector2(0, 450);
+    [SerializeField] public Vector2 _forceMin = new Vector2(0, 350);
+    [SerializeField] public Vector2 _forceMax = new Vector2(0, 450);
     [SerializeField] bool _usePhysics = true;
     [Tooltip("Roll time only appies when not using physics")]
     [SerializeField] float _rollDuration = 2f;
 
+    private Vector2 rollFore; 
     static readonly int RollingAnimation = Animator.StringToHash("RollDice");
     static readonly int[] ResultAnimations =
     {
         //
         Animator.StringToHash("RollOnOne"),
         Animator.StringToHash("RollOnTwo"),
-        /*Animator.StringToHash("LandOnThree"),
-        Animator.StringToHash("LandOnFour"),
-        Animator.StringToHash("LandOnFive"),
-        Animator.StringToHash("LandOnSix"),*/
+        Animator.StringToHash("RollOnThree"),
+        Animator.StringToHash("RollOnFour"),
+        Animator.StringToHash("RollOnFive"),
+        Animator.StringToHash("RollOnSix"),
 
     };
 
@@ -95,7 +96,9 @@ public class Dice : MonoBehaviour
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
         animator.SetTrigger(ResultAnimations[Result]);
+
         OnRoll?.Invoke(Result);
+        GameManager.Instance.OnRollComplete();
     }
 
     Vector2 GetRollForce()
@@ -107,50 +110,11 @@ public class Dice : MonoBehaviour
         return force ;
     }
 
+    public void SetRollForce(Vector2 force)
+    {
+        rollFore = force; 
+    }
 
    
 
 }
-/* public void RollDice()
-    {
-        
-        ApplyForce();
-        animatingRenderer.gameObject.SetActive(true);
-        resultRenderer.gameObject.SetActive(false);
-        StartCoroutine(AnimateDice());
-    }
-    private void ApplyForce()
-    {
-        // Reset velocity and angular velocity before applying force
-        rb.velocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-
-        // Apply force to simulate the dice being thrown
-        rb.AddForce(new Vector2(UnityEngine.Random.Range(-5f, 5f), UnityEngine.Random.Range(10f, 15f)), ForceMode2D.Impulse);
-    }
-    private IEnumerator AnimateDice()
-    {
-        float elapsedTime = 0f;
-        int currentIndex = 0;
-        float animationSpeed = initialAnimationSpeed;
-
-        while (true)
-        {
-            animatingRenderer.sprite = allSprites[currentIndex];
-            currentIndex = (currentIndex + 1) % allSprites.Count;
-
-            // Accelerate the animation speed gradually
-            elapsedTime += Time.deltaTime;
-            animationSpeed = Mathf.Lerp(initialAnimationSpeed, finalAnimationSpeed, elapsedTime / accelerationTime);
-
-            yield return new WaitForSeconds(animationSpeed);
-        }
-    }
-
-    public void StopAnimation(int resultIndex)
-    {
-        StopAllCoroutines();
-        animatingRenderer.gameObject.SetActive(false);
-        resultRenderer.sprite = resultSprites[resultIndex];
-        resultRenderer.gameObject.SetActive(true);
-    }*/

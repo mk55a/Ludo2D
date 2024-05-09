@@ -8,7 +8,6 @@ public class Home : MonoBehaviour
     [SerializeField] private Color homeColor;
     [SerializeField] private GameObject unitPrefab;
     [SerializeField] private Animator animator;
-    [SerializeField] private GameObject selectableUI;
 
     public List<Unit> activeUnits;
     public List<Unit> atHomeUnits;
@@ -22,7 +21,7 @@ public class Home : MonoBehaviour
         atHomeUnits = new List<Unit>();
         finishedUnits = new List<Unit>();
         OldDice.Instance.OnDiceRolled += HandleDiceRolled;
-        //Dice.OnRoll += HandleDiceRolled;
+        Dice.OnRoll += HandleDiceRolled;
         foreach(UnitHolderBase holders in unitHolders)
         {
             Unit unit =holders.InstantiateUnit(unitPrefab);
@@ -150,5 +149,11 @@ public class Home : MonoBehaviour
                 unit.DisableSelection();
             }
         }
+    }
+
+    public void ChangeTurn(bool newIsTurn)
+    {
+        isTurn = newIsTurn;
+        animator.SetBool("IsTurn", isTurn);
     }
 }
