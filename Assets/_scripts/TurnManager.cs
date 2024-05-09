@@ -9,6 +9,8 @@ public class TurnManager : MonoBehaviour
 
     [SerializeField]
     private List<Home> inGameHomes;
+    [SerializeField]
+    private float turnDelayDuration; 
 
     private int currentHomeIndex = 0;
 
@@ -34,11 +36,13 @@ public class TurnManager : MonoBehaviour
 
         currentHomeIndex = 0;
         StartTurn();
+        Unit.OnTraversalComplete += TurnDelay;
     }
 
     private void StartTurn()
     {
-        for(int i = 0; i< inGameHomes.Count; i++)
+        
+        for (int i = 0; i< inGameHomes.Count; i++)
         {
             if(i == currentHomeIndex)
             {
@@ -57,6 +61,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndTurn(bool isSixRolled)
     {
+        
         inGameHomes[currentHomeIndex].ChangeTurn(false);
         
 
@@ -66,6 +71,18 @@ public class TurnManager : MonoBehaviour
         }
 
         StartTurn();
+    }
+
+    public void TurnDelay()
+    {
+        StartCoroutine(TurnDelayCoroutine());
+    }
+
+    private IEnumerator TurnDelayCoroutine()
+    {
+        yield return new WaitForSeconds(turnDelayDuration);
+
+        GameManager.Instance.OnMovementComplete();
     }
 
 }

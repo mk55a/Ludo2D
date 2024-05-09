@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeGameState(GameStates newState)
     {
+        Debug.LogError("Changing Game State");
         currentState = newState;
         OnGameStateChanged?.Invoke(newState);
     }
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         if (currentState == GameStates.MOVEMENT)
         {
+            TurnManager.Instance.EndTurn(DiceHandler.Instance.GetDiceRoll() == 6);
             // Transition to selection state
             ChangeGameState(GameStates.ROLL);
         }

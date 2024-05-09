@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 public class Unit : MonoBehaviour
 {
+    public static event Action OnTraversalComplete; 
     public event Action<Unit, UnitState> OnStateChanged;
     public event Action OnSelectionHandled; 
 
@@ -57,9 +58,10 @@ public class Unit : MonoBehaviour
 
     public void EnableSelection()
     {
-        Debug.Log("Can be selected " + currentState);
+        
         selectionButton.interactable = true;
         selectionUI.SetActive(true);
+        animator.SetBool("CanBeSelected", true);
         //selectionButton.onClick.AddListener(HandleSelection);
 
         //HandleSelection();
@@ -70,10 +72,13 @@ public class Unit : MonoBehaviour
         selectionButton.onClick.RemoveListener(HandleSelection);
         selectionButton.interactable = false;
         selectionUI.SetActive(false);
+        animator.SetBool("CanBeSelected", false);
     }
 
     public void HandleSelection()
     {
+        OnSelectionHandled?.Invoke();
+        
         if (currentState == UnitState.HOME)
         {
             GetFirstTileOnBoard();
@@ -92,7 +97,8 @@ public class Unit : MonoBehaviour
         Debug.Log("Going to traverse tiles");
         canMove = true;
         StartCoroutine(TraversalTilesCoroutine());
-        OnSelectionHandled?.Invoke();
+ 
+        OnTraversalComplete?.Invoke();
     }
 
     private IEnumerator TraversalTilesCoroutine()
@@ -166,8 +172,8 @@ public class Unit : MonoBehaviour
     
     public void GetTilesToTraverse()
     {
-        tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], OldDice.Instance.GetRoll());//, GetTilesTraversedCount()); 
-        //tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(this);
+        //tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], DiceHandler.Instance.GetDiceRoll());//OldDice.Instance.GetRoll());//, GetTilesTraversedCount()); 
+        tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(this);
         foreach(var tile in tilesToBeTraversed)
         {
             Debug.LogError(tile.gameObject.name + " "+ tile.GetPositionIndex());

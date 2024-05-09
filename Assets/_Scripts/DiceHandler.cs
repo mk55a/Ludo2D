@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class DiceHandler : MonoBehaviour
 {
-    [SerializeField] private int rollValue; 
+    [SerializeField] private int rollValue;
+    private int diceRoll;
 
     [SerializeField] Button rollButton;
     [SerializeField] Dice _diceRoller;
@@ -20,12 +21,21 @@ public class DiceHandler : MonoBehaviour
     [SerializeField] Vector2 _forceMin = new Vector2(0, 350);
     [SerializeField] Vector2 _forceMax = new Vector2(0, 450);
 
+    public static DiceHandler Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
     private void OnEnable()
     {
         rollButton.onClick.AddListener(RollDice);
         Dice.OnRoll += HandleRoll;
         GameManager.OnGameStateChanged += HandleStateChange;
-    }
+        
+}
 
     private void OnDisable()
     {
@@ -33,7 +43,10 @@ public class DiceHandler : MonoBehaviour
         Dice.OnRoll -= HandleRoll;
     }
 
-    
+    private void Start()
+    {
+        TurnManager.Instance.OnTurnChanged += EnableDice;
+    }
     private void HandleStateChange(GameStates state)
     {
         if(state == GameStates.ROLL)
@@ -86,12 +99,20 @@ public class DiceHandler : MonoBehaviour
         }
     }
 
+    void EnableDice(Home home)
+    {
+        canSwipe = true;
+    }
     void HandleRoll(int obj)
     {
+        canSwipe = false;
         Debug.LogError($"You Rolled a {obj}");
-
+        diceRoll = obj;
     }
-
+    public int GetDiceRoll()
+    {
+        return diceRoll;
+    }
     void RollDice()
     {
         _diceRoller.RollDie();

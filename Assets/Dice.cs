@@ -54,14 +54,14 @@ public class Dice : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.LogError("Collided With Table " +rb.velocity);
+        //Debug.LogError("Collided With Table " +rb.velocity);
         if (rb.velocity.sqrMagnitude > 10f) return;
         FinishRolling();
     }
 
     public void RollDie(int value = 0)
     {
-        Result = value == 0 ? UnityEngine.Random.Range(0, ResultAnimations.Length) : value;
+        Result = value == 0 ? UnityEngine.Random.Range(0, ResultAnimations.Length+1) : value;
         if (_usePhysics)
         {
             RollWithPhysics();
@@ -95,10 +95,10 @@ public class Dice : MonoBehaviour
         isRolling = false;
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
-        animator.SetTrigger(ResultAnimations[Result]);
+        animator.SetTrigger(ResultAnimations[Result-1]);
 
         OnRoll?.Invoke(Result);
-        GameManager.Instance.OnRollComplete();
+        
     }
 
     Vector2 GetRollForce()

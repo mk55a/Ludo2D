@@ -27,7 +27,7 @@ public class Home : MonoBehaviour
             Unit unit =holders.InstantiateUnit(unitPrefab);
 
             unit.OnStateChanged += HandleUnitStateChanged;
-            unit.OnSelectionHandled += OnMoveComplete;
+            unit.OnSelectionHandled += DisableUnitSelection;
            
         }
         ChangeTurn();
@@ -90,24 +90,28 @@ public class Home : MonoBehaviour
             return;
         }
 
-        Debug.Log("Handling dice roll");
-        
-        if(roll == 6)
+        //Debug.Log("Handling dice roll");
+
+        if(activeUnits.Count == 0 && roll != 6)
+        {
+            TurnManager.Instance.EndTurn(false);
+            return;
+        }
+        else if (roll == 6)
         {
             EnableHomeUnitSelection();
             EnableActiveUnitSelection();
         }
         else
         {
+            //Debug.Log("Enablign Active units");
             EnableActiveUnitSelection();
         }
+
+        GameManager.Instance.OnRollComplete();
     }
 
-    private void OnMoveComplete()
-    {
-        DisableUnitSelection();
-        OldDice.Instance.diceButton.interactable = true; 
-    }
+    
 
     
     private void EnableHomeUnitSelection()
@@ -120,6 +124,7 @@ public class Home : MonoBehaviour
             }
         }
     }
+    
     private void EnableActiveUnitSelection()
     {
         if (activeUnits.Count != 0)
@@ -149,6 +154,7 @@ public class Home : MonoBehaviour
                 unit.DisableSelection();
             }
         }
+        GameManager.Instance.OnSelectionComplete();
     }
 
     public void ChangeTurn(bool newIsTurn)
