@@ -1,71 +1,78 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Home : MonoBehaviour
 {
+    [Header("Unit Settings")]
     [SerializeField] private List<UnitHolderBase> unitHolders;
-    [SerializeField] private Color homeColor;
     [SerializeField] private GameObject unitPrefab;
+
+    [Header("Turn Settings")]
     [SerializeField] private Animator animator;
-
-    public List<Unit> activeUnits;
-    public List<Unit> endUnits; 
-    public List<Unit> atHomeUnits;
-    public List<Unit> finishedUnits;
-
     public bool isTurn;
-    
+
+    [Header("Unit Lists")]
+    public List<Unit> activeUnits = new List<Unit>();
+    public List<Unit> endUnits = new List<Unit>();
+    public List<Unit> atHomeUnits = new List<Unit>();
+    public List<Unit> finishedUnits = new List<Unit>();
+
     private void Start()
     {
-        activeUnits = new List<Unit>();
-        atHomeUnits = new List<Unit>();
-        endUnits = new List<Unit>();
-        finishedUnits = new List<Unit>();
+        // Initialize unit lists
+        InitUnitLists();
 
+        // Subscribe to dice events
         OldDice.Instance.OnDiceRolled += HandleDiceRolled;
         Dice.OnRoll += HandleDiceRolled;
 
+        // Initiate units
         InitiateUnits();
+
+        // Change turn
         ChangeTurn();
     }
 
+    private void InitUnitLists()
+    {
+        activeUnits.Clear();
+        atHomeUnits.Clear();
+        endUnits.Clear();
+        finishedUnits.Clear();
+    }
 
     private void InitiateUnits()
     {
-        foreach (UnitHolderBase holders in unitHolders)
+        foreach (UnitHolderBase holder in unitHolders)
         {
-            Unit unit = holders.InstantiateUnit(unitPrefab);
-
+            Unit unit = holder.InstantiateUnit(unitPrefab);
             unit.OnStateChanged += HandleUnitStateChanged;
             unit.OnSelectionHandled += DisableUnitSelection;
-
         }
     }
 
     private UnitHolderBase FindEmptyUnitHolder()
     {
-        foreach(UnitHolderBase holders in unitHolders)
+        foreach (UnitHolderBase holder in unitHolders)
         {
-            if (holders.IsEmpty()) return holders;
-            
-
+            if (holder.IsEmpty())
+                return holder;
         }
         return null;
     }
 
-    private void HandleUnitStateChanged(Unit unit , UnitState newState)
+    private void HandleUnitStateChanged(Unit unit, UnitState newState)
     {
         switch (newState)
         {
             case UnitState.HOME:
                 HandleUnitAtHome(unit);
-                
                 break;
 
             case UnitState.ONBOARD:
                 HandleUnitOnBoard(unit);
-
                 break;
 
             case UnitState.ONEND:
@@ -74,19 +81,14 @@ public class Home : MonoBehaviour
 
             case UnitState.FINISH:
                 HandleUnitFinished(unit);
-
                 break;
-
-
         }
     }
 
-    
     private void ChangeTurn()
     {
         animator.SetTrigger("IsTurn");
     }
-
 
     private void HandleDiceRolled(int roll)
     {
@@ -96,9 +98,7 @@ public class Home : MonoBehaviour
             return;
         }
 
-        //Debug.Log("Handling dice roll");
-
-        if(activeUnits.Count == 0 &&endUnits.Count==0 && roll != 6) // or also if active Units are close to end and this dice roll won't let it move. 
+        if (activeUnits.Count == 0 && endUnits.Count == 0 && roll != 6)
         {
             TurnManager.Instance.EndTurn(false);
             return;
@@ -110,7 +110,6 @@ public class Home : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Enablign Active units");
             EnableActiveUnitSelection();
             EnableEndUnitSelection();
         }
@@ -118,79 +117,35 @@ public class Home : MonoBehaviour
         GameManager.Instance.OnRollComplete();
     }
 
-    
-
-    
     private void EnableHomeUnitSelection()
     {
-        if (atHomeUnits.Count != 0)
-        {
-            foreach (var unit in atHomeUnits)
-            {
-                unit.EnableSelection();
-            }
-        }
-    }
-    
-    private void EnableActiveUnitSelection()
-    {
-        if (activeUnits.Count != 0)
-        {
-            foreach (var unit in activeUnits)
-            {
-                unit.EnableSelection();
-            }
-        }
+        foreach (var unit in atHomeUnits)
+            unit.EnableSelection();
     }
 
+    private void EnableActiveUnitSelection()
+    {
+        foreach (var unit in activeUnits)
+            unit.EnableSelection();
+    }
 
     private void EnableEndUnitSelection()
     {
-        if (endUnits.Count != 0)
+        foreach (var unit in endUnits)
         {
-            bool someUnitCanBeSelected = false;
-            foreach (var unit in endUnits)
-            {
-                if (unit.CanBeSelected())
-                {
-                    someUnitCanBeSelected = true;
-                    unit.EnableSelection();
-                }
-
-            }
-
-            if (!someUnitCanBeSelected && activeUnits.Count ==0)
-            {
-                TurnManager.Instance.EndTurn(false);
-            }
+            if (unit.CanBeSelected())
+                unit.EnableSelection();
         }
+
+        if (!endUnits.Any(unit => unit.CanBeSelected()) && activeUnits.Count == 0)
+            TurnManager.Instance.EndTurn(false);
     }
 
     private void DisableUnitSelection()
     {
-        if (atHomeUnits.Count != 0)
-        {
-            foreach (var unit in atHomeUnits)
-            {
-                unit.DisableSelection();
-            }
-        }
+        foreach (var unit in atHomeUnits.Concat(activeUnits).Concat(endUnits))
+            unit.DisableSelection();
 
-        if (activeUnits.Count != 0)
-        {
-            foreach (var unit in activeUnits)
-            {
-                unit.DisableSelection();
-            }
-        }
-
-        if(endUnits.Count!= 0)
-        {
-            foreach(var unit in endUnits)
-            {
-                unit.DisableSelection();
-            }
-        }
         GameManager.Instance.OnSelectionComplete();
     }
 
@@ -200,56 +155,34 @@ public class Home : MonoBehaviour
         animator.SetBool("IsTurn", isTurn);
     }
 
-
-
-    // Handles unit state transition to HOME
     private void HandleUnitAtHome(Unit unit)
     {
-        // Remove unit from other lists
         RemoveUnitFromLists(unit);
-
-        // Add the unit to the 'atHomeUnits' list
         atHomeUnits.Add(unit);
 
-        // Find an empty unit holder and add the unit if available
         UnitHolderBase holder = FindEmptyUnitHolder();
         if (holder != null)
-        {
             holder.AddUnit(unit);
-        }
     }
 
-    // Handles unit state transition to ONBOARD
     private void HandleUnitOnBoard(Unit unit)
     {
-        // Remove unit from other lists
         RemoveUnitFromLists(unit);
-
-        // Add the unit to the 'activeUnits' list
         activeUnits.Add(unit);
     }
 
-    // Handles unit state transition to ONEND
     private void HandleUnitOnEnd(Unit unit)
     {
-        // Remove unit from other lists
         RemoveUnitFromLists(unit);
-
-        // Add the unit to the 'endUnits' list
         endUnits.Add(unit);
     }
 
-    // Handles unit state transition to FINISH
     private void HandleUnitFinished(Unit unit)
     {
-        // Remove unit from other lists
         RemoveUnitFromLists(unit);
-
-        // Add the unit to the 'finishedUnits' list
         finishedUnits.Add(unit);
     }
 
-    // Helper method to remove unit from all lists
     private void RemoveUnitFromLists(Unit unit)
     {
         endUnits.Remove(unit);
