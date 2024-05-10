@@ -91,6 +91,74 @@ public class Unit : MonoBehaviour
         TraverseTiles();
     }
 
+    public bool CanBeSelected()
+    {
+        if(GetTilesTraversedCount() + DiceHandler.Instance.GetDiceRoll() > 57)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public void UnitReachedEnd()
+    {
+        SetState(UnitState.FINISH);
+    }
+    public void TraverseBackToHome()
+    {
+        canMove = true;
+        StartCoroutine(TraverseTilesToHomeCoroutine());
+    }
+
+    private IEnumerator TraverseTilesToHomeCoroutine()
+    {
+        if (!canMove || GetTilesTraversedCount() == 0)
+        {
+            Debug.Log(tilesTraversed.Count + "Traversing home");
+            yield break;
+        }
+        for(currentTraversalIndex =GetTilesTraversedCount()-2; currentTraversalIndex>=0; currentTraversalIndex--)
+        {
+            tilesTraversed[currentTraversalIndex].RemoveUnit(this);
+            transform.SetParent(TileManager.Instance.inMovementParent.transform);
+
+            ChangeScale();
+            Debug.LogError("INDEX : " + currentTraversalIndex +  " , " + GetTilesTraversedCount());
+            Vector3 targetPosition = tilesTraversed[currentTraversalIndex].transform.position;
+
+            float distance = Vector3.Distance(transform.position, targetPosition);
+            float journeyTime = 0.2f; // Adjust the duration of movement (lower values for quicker movement)
+            float elapsedTime = 0f;
+            Vector3 startingPosition = transform.position;
+
+            while (elapsedTime < journeyTime)
+            {
+                elapsedTime += Time.deltaTime;
+                transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsedTime / journeyTime);
+                yield return null;
+            }
+
+            SetToOriginalSize();
+
+            tilesTraversed.Remove(tilesTraversed[currentTraversalIndex]);   
+            Debug.LogWarning("Moved down by one");
+
+
+            yield return new WaitForSeconds(0.125f);
+        }
+        Debug.Log("UnitBackToHome");
+
+        //Add it back to home.
+        tilesTraversed.Clear();
+        canMove = false;
+        SetState(UnitState.HOME);
+        
+
+    }
+
     public void TraverseTiles()
     {
         if (tilesToBeTraversed.Count == 0) return;
@@ -108,11 +176,7 @@ public class Unit : MonoBehaviour
             yield break;
         }
 
-        /*if (tilesTraversed.Count >= 51)
-        {
-            tilesToBeTraversed.Clear();
-            //tilesToBeTraversed = 
-        }*/
+        
         if(tilesTraversed.Count != 0)
         {
             tilesTraversed[tilesTraversed.Count - 1].RemoveUnit(this);
@@ -121,7 +185,7 @@ public class Unit : MonoBehaviour
 
         for(currentTraversalIndex =0; currentTraversalIndex<tilesToBeTraversed.Count; currentTraversalIndex++)
         {
-            Debug.LogError(tilesToBeTraversed.Count + " Current " + currentTraversalIndex);
+            //Debug.LogError(tilesToBeTraversed.Count + " Current " + currentTraversalIndex);
             transform.SetParent(TileManager.Instance.inMovementParent.transform);
 
             ChangeScale();
@@ -173,7 +237,9 @@ public class Unit : MonoBehaviour
     public void GetTilesToTraverse()
     {
         //tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], DiceHandler.Instance.GetDiceRoll());//OldDice.Instance.GetRoll());//, GetTilesTraversedCount()); 
+       
         tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(this);
+        
         foreach(var tile in tilesToBeTraversed)
         {
             Debug.LogError(tile.gameObject.name + " "+ tile.GetPositionIndex());
@@ -193,6 +259,18 @@ public class Unit : MonoBehaviour
     public Color GetUnitColor()
     {
         return unitColor;
+    }
+
+    public bool CanUnitMove()
+    {
+        if(GetTilesTraversedCount() + DiceHandler.Instance.GetDiceRoll() > 57)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
     
     private void SetToOriginalSize()

@@ -10,6 +10,7 @@ public class Home : MonoBehaviour
     [SerializeField] private Animator animator;
 
     public List<Unit> activeUnits;
+    public List<Unit> endUnits; 
     public List<Unit> atHomeUnits;
     public List<Unit> finishedUnits;
 
@@ -19,31 +20,38 @@ public class Home : MonoBehaviour
     {
         activeUnits = new List<Unit>();
         atHomeUnits = new List<Unit>();
+        endUnits = new List<Unit>();
         finishedUnits = new List<Unit>();
+
         OldDice.Instance.OnDiceRolled += HandleDiceRolled;
         Dice.OnRoll += HandleDiceRolled;
-        foreach(UnitHolderBase holders in unitHolders)
-        {
-            Unit unit =holders.InstantiateUnit(unitPrefab);
 
-            unit.OnStateChanged += HandleUnitStateChanged;
-            unit.OnSelectionHandled += DisableUnitSelection;
-           
-        }
+        InitiateUnits();
         ChangeTurn();
     }
 
 
-    private void Update()
+    private void InitiateUnits()
     {
-        /*if(isTurn)
+        foreach (UnitHolderBase holders in unitHolders)
         {
-           animator.i
+            Unit unit = holders.InstantiateUnit(unitPrefab);
+
+            unit.OnStateChanged += HandleUnitStateChanged;
+            unit.OnSelectionHandled += DisableUnitSelection;
+
         }
-        else
+    }
+
+    private UnitHolderBase FindEmptyUnitHolder()
+    {
+        foreach(UnitHolderBase holders in unitHolders)
         {
-            gameObject.SetActive(false);
-        }*/
+            if (holders.IsEmpty()) return holders;
+            
+
+        }
+        return null;
     }
 
     private void HandleUnitStateChanged(Unit unit , UnitState newState)
@@ -51,23 +59,21 @@ public class Home : MonoBehaviour
         switch (newState)
         {
             case UnitState.HOME:
-                finishedUnits.Remove(unit);
-                activeUnits.Remove(unit);
-                atHomeUnits.Add(unit);
-
+                HandleUnitAtHome(unit);
+                
                 break;
 
             case UnitState.ONBOARD:
-                finishedUnits.Remove(unit);
-                atHomeUnits.Remove(unit);
-                activeUnits.Add(unit);
+                HandleUnitOnBoard(unit);
 
                 break;
 
+            case UnitState.ONEND:
+                HandleUnitOnEnd(unit);
+                break;
+
             case UnitState.FINISH:
-                atHomeUnits.Remove(unit);
-                activeUnits.Remove(unit);
-                finishedUnits.Add(unit);
+                HandleUnitFinished(unit);
 
                 break;
 
@@ -75,7 +81,61 @@ public class Home : MonoBehaviour
         }
     }
 
-   
+    // Handles unit state transition to HOME
+    private void HandleUnitAtHome(Unit unit)
+    {
+        // Remove unit from other lists
+        RemoveUnitFromLists(unit);
+
+        // Add the unit to the 'atHomeUnits' list
+        atHomeUnits.Add(unit);
+
+        // Find an empty unit holder and add the unit if available
+        UnitHolderBase holder = FindEmptyUnitHolder();
+        if (holder != null)
+        {
+            holder.AddUnit(unit);
+        }
+    }
+
+    // Handles unit state transition to ONBOARD
+    private void HandleUnitOnBoard(Unit unit)
+    {
+        // Remove unit from other lists
+        RemoveUnitFromLists(unit);
+
+        // Add the unit to the 'activeUnits' list
+        activeUnits.Add(unit);
+    }
+
+    // Handles unit state transition to ONEND
+    private void HandleUnitOnEnd(Unit unit)
+    {
+        // Remove unit from other lists
+        RemoveUnitFromLists(unit);
+
+        // Add the unit to the 'endUnits' list
+        endUnits.Add(unit);
+    }
+
+    // Handles unit state transition to FINISH
+    private void HandleUnitFinished(Unit unit)
+    {
+        // Remove unit from other lists
+        RemoveUnitFromLists(unit);
+
+        // Add the unit to the 'finishedUnits' list
+        finishedUnits.Add(unit);
+    }
+
+    // Helper method to remove unit from all lists
+    private void RemoveUnitFromLists(Unit unit)
+    {
+        endUnits.Remove(unit);
+        finishedUnits.Remove(unit);
+        activeUnits.Remove(unit);
+        atHomeUnits.Remove(unit);
+    }
     private void ChangeTurn()
     {
         animator.SetTrigger("IsTurn");
@@ -92,7 +152,7 @@ public class Home : MonoBehaviour
 
         //Debug.Log("Handling dice roll");
 
-        if(activeUnits.Count == 0 && roll != 6)
+        if(activeUnits.Count == 0 && roll != 6) // or also if active Units are close to end and this dice roll won't let it move. 
         {
             TurnManager.Instance.EndTurn(false);
             return;
@@ -120,6 +180,7 @@ public class Home : MonoBehaviour
         {
             foreach (var unit in atHomeUnits)
             {
+                
                 unit.EnableSelection();
             }
         }
@@ -129,9 +190,20 @@ public class Home : MonoBehaviour
     {
         if (activeUnits.Count != 0)
         {
+            bool someUnitCanBeSelected = false;
             foreach (var unit in activeUnits)
             {
-                unit.EnableSelection();
+                if (unit.CanBeSelected())
+                {
+                    someUnitCanBeSelected = true; 
+                    unit.EnableSelection();
+                }
+                
+            }
+
+            if (!someUnitCanBeSelected)
+            {
+                TurnManager.Instance.EndTurn(false);
             }
         }
     }

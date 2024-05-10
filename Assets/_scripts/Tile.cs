@@ -73,9 +73,47 @@ public class Tile : MonoBehaviour
 
     public void AddUnit(Unit unit)
     {
-        unitsOnTile.Add(unit);
-        unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
-        Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
+        if (unitsOnTile.Count == 1 )
+        {
+            if(unitsOnTile[0].GetUnitColor() != unit.GetUnitColor())
+            {
+                unitsOnTile[0].TraverseBackToHome();
+                unitsOnTile.Add(unit);
+                unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
+                Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
+            }
+            else
+            {
+                unitsOnTile.Add(unit);
+                unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
+                Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
+            }
+        }
+        else if(unitsOnTile.Count >= 2 )
+        {
+            if (unitsOnTile[0].GetUnitColor() != unit.GetUnitColor())
+            {
+                unit.TraverseBackToHome();
+            }
+            else
+            {
+                unitsOnTile.Add(unit);
+                unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
+                Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
+            }
+        }
+        else
+        {
+            unitsOnTile.Add(unit);
+            unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
+            Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
+        }
+        
+
+        if(GetTileColor() == TileManager.ConvertColorToTileColor(unit.GetUnitColor()) && GetTileType()==TileType.END && GetPositionIndex()==6)
+        {
+            unit.UnitReachedEnd();
+        }
     }
 
     public void RemoveUnit(Unit unit)
@@ -88,10 +126,12 @@ public class Tile : MonoBehaviour
     {
         return tileColor;
     }
+
     public TileType GetTileType()
     {
         return tileType;
     }
+
     public int GetPositionIndex()
     {
         return positionIndex;

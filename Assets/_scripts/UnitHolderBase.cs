@@ -11,9 +11,23 @@ public class UnitHolderBase : MonoBehaviour
         return unitComponent;
     }
 
+    public void AddUnit(Unit unit)
+    {
+        unit.gameObject.transform.SetParent(transform);
+        unit.gameObject.transform.position = transform.position;
+    }
     public bool IsEmpty()
     {
-        return true; 
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<Unit>() != null)
+            {
+                // If at least one child with Unit component is found, return false
+                return false;
+            }
+        }
+        // If no child with Unit component is found, return true
+        return true;
 
     }
 }

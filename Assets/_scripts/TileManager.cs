@@ -116,30 +116,81 @@ public class TileManager : MonoBehaviour
             }
             Debug.LogWarning("GETTING TILES : END TILES");
         }
+
+
+
         //if in this turn the unit will enter the end tile
         else if(diceRoll + traversedTilesCount > 51)
         {
             //The remaining dice. 
-            targetIndex = currentIndex + (51 - traversedTilesCount);
+            int currentTargetIndex = currentIndex + (51 - traversedTilesCount);
+           
+            int endDiceRoll = (diceRoll + traversedTilesCount) - 51;
+            int currentDiceRoll = diceRoll - endDiceRoll;
 
-            diceRoll = (diceRoll + traversedTilesCount) - 51;
-
-            
             foreach (Tile tile in tiles)
             {
                 int tilePosIndex = tile.GetPositionIndex();
-                if (tile.GetTileType() == TileType.END && tile.GetTileColor() == ConvertColorToTileColor(unit.GetUnitColor()))
+                if (tile.GetTileType() != TileType.END && tilePosIndex > currentIndex && tilePosIndex <= currentTargetIndex)
                 {
-                    if (tilePosIndex <= (57 - traversedTilesCount) && tilePosIndex > currentIndex && diceRoll > 0 && diceRoll <= (57 - traversedTilesCount))
-                    {
-                        eligibleTiles.Add(tile);
-                        diceRoll--;
-                    }
-                    // make sure to the least position index ones to the eligibleTiles.
+                    Debug.Log(tilePosIndex);
+                    eligibleTiles.Add(tile);
+                    traversedTilesCount++;
+                }
+                //Sorting the tiles. 
+                if (eligibleTiles.Count > 1)
+                {
+                    eligibleTiles.Sort((a, b) => a.GetPositionIndex().CompareTo(b.GetPositionIndex()));
                 }
             }
+            List<Tile> endEligibleTiles = new List<Tile>();
+            foreach (Tile tile in tiles)
+            {
+                int tilePosIndex = tile.GetPositionIndex();
+                currentIndex = 0;
+                if (traversedTilesCount == 51 && tile.GetTileType() == TileType.END && tile.GetTileColor() == ConvertColorToTileColor(unit.GetUnitColor()))
+                {
+                    if (tilePosIndex <= (57 - traversedTilesCount) && tilePosIndex > currentIndex && tilePosIndex<= endDiceRoll)
+                    {
+                        endEligibleTiles.Add(tile);
+                        
+                    }
+                }
+                if (endEligibleTiles.Count > 1)
+                {
+                    endEligibleTiles.Sort((a, b) => a.GetPositionIndex().CompareTo(b.GetPositionIndex()));
+                }
+            }
+
+            eligibleTiles.AddRange(endEligibleTiles);
             Debug.LogWarning("GETTING TILES : SWITCHing TO END TILES");
         }
+
+
+        //If its already on END type tiles.
+        else if (traversedTilesCount > 51)
+        {
+            targetIndex = currentIndex + diceRoll;
+            foreach (Tile tile in tiles)
+            {
+                int tilePosIndex = tile.GetPositionIndex();
+                currentIndex = 0;
+                if (traversedTilesCount == 51 && tile.GetTileType() == TileType.END && tile.GetTileColor() == ConvertColorToTileColor(unit.GetUnitColor()))
+                {
+                    if (tilePosIndex <= (57 - traversedTilesCount) && tilePosIndex > currentIndex && tilePosIndex <= targetIndex)
+                    {
+                        eligibleTiles.Add(tile);
+
+                    }
+                }
+                if (eligibleTiles.Count > 1)
+                {
+                    eligibleTiles.Sort((a, b) => a.GetPositionIndex().CompareTo(b.GetPositionIndex()));
+                }
+            }
+            Debug.LogWarning("GETTING TILES : ALREADY ON END TILES going to end");
+        }
+
         //if the unit has to still traverse on the normal tiles, but reaches tile 52 index
         else if(currentIndex==52 && traversedTilesCount < 51)
         {
@@ -162,6 +213,10 @@ public class TileManager : MonoBehaviour
             }
             Debug.LogWarning("GETTING TILES : STATRTING FROM ONE");
         }
+
+
+
+
         //if it is not going to switch it's state, and traverse on normal tiles only. 
         else
         {
