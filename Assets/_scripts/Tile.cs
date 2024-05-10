@@ -5,43 +5,27 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-
-    public List<Unit> unitsOnTile; 
-
+    [Header("Tile Properties")]
     [SerializeField] private int positionIndex;
     [SerializeField] private TileType tileType;
     [SerializeField] private TileColor tileColor;
-
     [SerializeField] private GameObject gridLayoutContainer;
+    [SerializeField] private Image tileImage;
+    [SerializeField] private Image safeImage;
 
+    [Header("Common Tile Colors")]
+    [SerializeField] private Color32 blue;
+    [SerializeField] private Color32 red;
+    [SerializeField] private Color32 yellow;
+    [SerializeField] private Color32 green;
+    [SerializeField] private Color32 white;
 
-
-
-
-    [Tooltip("CommonProperties")]
-    [SerializeField]
-    private Color32 blue;
-    [SerializeField]
-    private Color32 red;
-    [SerializeField]
-    private Color32 yellow;
-    [SerializeField]
-    private Color32 green;
-    [SerializeField]
-    private Color32 white;
-
-
-    [SerializeField]
-    private Image tileImage;
-
-    [SerializeField]
-    private Image safeImage;
+    public List<Unit> unitsOnTile;
 
     private void Awake()
     {
-        SetTileProperties();
         unitsOnTile = new List<Unit>();
-        
+        SetTileProperties();
     }
 
     private void SetTileProperties()
@@ -73,51 +57,24 @@ public class Tile : MonoBehaviour
 
     public void AddUnit(Unit unit)
     {
-        if (unitsOnTile.Count == 1 )
+        if (unitsOnTile.Count == 1 && unitsOnTile[0].GetUnitColor() != unit.GetUnitColor())
         {
-            if(unitsOnTile[0].GetUnitColor() != unit.GetUnitColor())
-            {
-                unitsOnTile[0].TraverseBackToHome();
-                unitsOnTile.Add(unit);
-                unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
-                Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
-            }
-            else
-            {
-                unitsOnTile.Add(unit);
-                unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
-                Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
-            }
+            unitsOnTile[0].TraverseBackToHome();
         }
-        else if(unitsOnTile.Count >= 2 )
-        {
-            if (unitsOnTile[0].GetUnitColor() != unit.GetUnitColor())
-            {
-                unit.TraverseBackToHome();
-            }
-            else
-            {
-                unitsOnTile.Add(unit);
-                unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
-                Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
-            }
-        }
-        else
-        {
-            unitsOnTile.Add(unit);
-            unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
-            Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
-        }
-        
 
-        if(GetTileColor() == TileManager.ConvertColorToTileColor(unit.GetUnitColor()) && GetTileType()==TileType.END && GetPositionIndex()==6)
+        unitsOnTile.Add(unit);
+        unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
+        Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
+
+        if (GetTileColor() == TileManager.ConvertColorToTileColor(unit.GetUnitColor()) && GetTileType() == TileType.END && GetPositionIndex() == 6)
         {
             unit.UnitFinished();
         }
-        if(GetTileType() == TileType.END && unit.GetUnitState() != UnitState.ONEND)
+
+        if (GetTileType() == TileType.END && unit.GetUnitState() != UnitState.ONEND)
         {
             unit.UnitIsOnEnd();
-        } 
+        }
     }
 
     public void RemoveUnit(Unit unit)

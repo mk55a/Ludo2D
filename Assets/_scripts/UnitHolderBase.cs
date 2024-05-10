@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class UnitHolderBase : MonoBehaviour
 {
-    public Unit InstantiateUnit(GameObject unit)
+    // Instantiate a unit GameObject and return its Unit component
+    public Unit InstantiateUnit(GameObject unitPrefab)
     {
-        GameObject unitGameObject = Instantiate(unit, transform.position, Quaternion.identity, transform);
-        Unit unitComponent = unitGameObject.GetComponent<Unit>();
-        return unitComponent;
+        GameObject unitGameObject = Instantiate(unitPrefab, transform.position, Quaternion.identity, transform);
+        return unitGameObject.GetComponent<Unit>();
     }
 
+    // Add a unit to the unit holder
     public void AddUnit(Unit unit)
     {
-        unit.gameObject.transform.SetParent(transform);
-        unit.gameObject.transform.position = transform.position;
+        // Set the unit's parent to this unit holder and position it at the holder's position
+        unit.transform.SetParent(transform);
+        unit.transform.position = transform.position;
     }
+
+    // Check if the unit holder is empty
     public bool IsEmpty()
     {
+        // Check if any child GameObject of this transform has a Unit component
         foreach (Transform child in transform)
         {
             if (child.GetComponent<Unit>() != null)
@@ -28,6 +33,5 @@ public class UnitHolderBase : MonoBehaviour
         }
         // If no child with Unit component is found, return true
         return true;
-
     }
 }

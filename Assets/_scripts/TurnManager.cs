@@ -5,22 +5,19 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    public static TurnManager Instance {  get; private set; }
+    public static TurnManager Instance { get; private set; }
 
-    [SerializeField]
-    private List<Home> inGameHomes;
-    [SerializeField]
-    private float turnDelayDuration; 
+    [Header("Turn Management")]
+    [SerializeField] private List<Home> inGameHomes;
+    [SerializeField] private float turnDelayDuration;
 
     private int currentHomeIndex = 0;
 
-
-    public event Action<Home> OnTurnChanged; 
-
+    public event Action<Home> OnTurnChanged;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -28,32 +25,28 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
-        if(inGameHomes.Count == 0)
+        InitializeTurns();
+        Unit.OnTraversalComplete += TurnDelay;
+    }
+
+    private void InitializeTurns()
+    {
+        if (inGameHomes.Count == 0)
         {
-            Debug.LogError("No homes added to the turn Manager !");
+            Debug.LogError("No homes added to the turn Manager!");
             return;
         }
 
         currentHomeIndex = 0;
         StartTurn();
-        Unit.OnTraversalComplete += TurnDelay;
     }
 
     private void StartTurn()
     {
-        
-        for (int i = 0; i< inGameHomes.Count; i++)
+        foreach (var home in inGameHomes)
         {
-            if(i == currentHomeIndex)
-            {
-                inGameHomes[i].ChangeTurn(true);
-                
-            }
-            else
-            {
-                inGameHomes[i].ChangeTurn(false);
-                
-            }
+            bool isCurrentHome = (home == inGameHomes[currentHomeIndex]);
+            home.ChangeTurn(isCurrentHome);
         }
 
         OnTurnChanged?.Invoke(inGameHomes[currentHomeIndex]);
@@ -61,9 +54,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndTurn(bool isSixRolled)
     {
-        
         inGameHomes[currentHomeIndex].ChangeTurn(false);
-        
 
         if (!isSixRolled)
         {
@@ -81,8 +72,6 @@ public class TurnManager : MonoBehaviour
     private IEnumerator TurnDelayCoroutine()
     {
         yield return new WaitForSeconds(turnDelayDuration);
-
         GameManager.Instance.OnMovementComplete();
     }
-
 }

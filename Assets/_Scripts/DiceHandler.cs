@@ -5,37 +5,37 @@ using UnityEngine.UI;
 
 public class DiceHandler : MonoBehaviour
 {
+    [Header("Dice Settings")]
     [SerializeField] private int rollValue;
-    private int diceRoll;
+    [SerializeField] private Dice _diceRoller;
 
-    [SerializeField] Button rollButton;
-    [SerializeField] Dice _diceRoller;
+    [Header("Button & Animation")]
+    [SerializeField] private Button rollButton;
+    [SerializeField] private Animator animator;
+
+    [Header("Swipe Detection")]
     [SerializeField] private float maxSwipeSpeed = 1000f;
     private Vector2 swipeStartPosition;
     private float swipeStartTime;
-    [SerializeField]
-    private Animator animator;
-    [SerializeField]
-    private bool canSwipe; 
+    private bool canSwipe;
 
-    [SerializeField] Vector2 _forceMin = new Vector2(0, 350);
-    [SerializeField] Vector2 _forceMax = new Vector2(0, 450);
+    [Header("Roll Force")]
+    [SerializeField] private Vector2 _forceMin = new Vector2(0, 350);
+    [SerializeField] private Vector2 _forceMax = new Vector2(0, 450);
 
     public static DiceHandler Instance { get; private set; }
+
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
+        Instance = this;
     }
+
     private void OnEnable()
     {
         rollButton.onClick.AddListener(RollDice);
         Dice.OnRoll += HandleRoll;
         GameManager.OnGameStateChanged += HandleStateChange;
-        
-}
+    }
 
     private void OnDisable()
     {
@@ -47,29 +47,20 @@ public class DiceHandler : MonoBehaviour
     {
         TurnManager.Instance.OnTurnChanged += EnableDice;
     }
+
     private void HandleStateChange(GameStates state)
     {
-        if(state == GameStates.ROLL)
-        {
-            canSwipe = true;
-            //animator.SetBool("CanThrowDice", true);
-        }
-        else
-        {
-            canSwipe = false;
-            //animator.SetBool("CanThrowDice", false); 
-        }
+        canSwipe = state == GameStates.ROLL;
+        // Set animator parameter if needed
+        // animator.SetBool("CanThrowDice", canSwipe);
     }
-
 
     private void Update()
     {
         if (!canSwipe)
-        {
             return;
-        }
 
-
+        // Detect swipe start
         if (Input.GetMouseButtonDown(0))
         {
             swipeStartPosition = Input.mousePosition;
@@ -82,16 +73,14 @@ public class DiceHandler : MonoBehaviour
             Vector2 swipeEndPosition = Input.mousePosition;
             Vector2 swipeDirection = swipeEndPosition - swipeStartPosition;
             float swipeDuration = Time.time - swipeStartTime;
-            float swipeDistance = swipeDirection.magnitude; //Vector2.Distance(swipeStartPosition, swipeEndPosition);
+            float swipeDistance = swipeDirection.magnitude;
             float swipeSpeed = swipeDistance / swipeDuration;
 
             // Calculate force based on swipe speed
-            float forcePercentage = Mathf.Clamp01(swipeSpeed / maxSwipeSpeed); // Assuming maxSwipeSpeed is predefined
-            float forceX = Mathf.Lerp(_diceRoller._forceMin.x, _diceRoller._forceMax.x, forcePercentage);
-            float forceY = Mathf.Lerp(_diceRoller._forceMin.y, _diceRoller._forceMax.y, forcePercentage);
+            float forcePercentage = Mathf.Clamp01(swipeSpeed / maxSwipeSpeed);
+            float forceX = Mathf.Lerp(_forceMin.x, _forceMax.x, forcePercentage);
+            float forceY = Mathf.Lerp(_forceMin.y, _forceMax.y, forcePercentage);
             Vector2 force = new Vector2(forceX, forceY);
-
-            //Vector2 force = Mathf.Lerp(_diceRoller._forceMin, _diceRoller._forceMax, forcePercentage);
 
             // Roll the dice with calculated force
             _diceRoller.SetRollForce(force);
@@ -99,21 +88,24 @@ public class DiceHandler : MonoBehaviour
         }
     }
 
-    void EnableDice(Home home)
+    private void EnableDice(Home home)
     {
         canSwipe = true;
     }
-    void HandleRoll(int obj)
+
+    private void HandleRoll(int value)
     {
         canSwipe = false;
-        Debug.LogError($"You Rolled a {obj}");
-        diceRoll = obj;
+        Debug.LogError($"You Rolled a {value}");
+        rollValue = value;
     }
+
     public int GetDiceRoll()
     {
-        return diceRoll;
+        return rollValue;
     }
-    void RollDice()
+
+    private void RollDice()
     {
         _diceRoller.RollDie();
     }
