@@ -43,6 +43,7 @@ public class TurnManager : MonoBehaviour
 
     private void StartTurn()
     {
+        StopCoroutine(TurnDelayCoroutine());
         foreach (var home in inGameHomes)
         {
             bool isCurrentHome = (home == inGameHomes[currentHomeIndex]);
@@ -55,10 +56,12 @@ public class TurnManager : MonoBehaviour
     public void EndTurn(bool isSixRolled)
     {
         inGameHomes[currentHomeIndex].ChangeTurn(false);
-
+        
         if (!isSixRolled)
         {
+            
             currentHomeIndex = (currentHomeIndex + 1) % inGameHomes.Count;
+            Debug.LogError("Changing turn to " + currentHomeIndex);
         }
 
         StartTurn();

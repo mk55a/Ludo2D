@@ -25,7 +25,6 @@ public class Home : MonoBehaviour
         InitUnitLists();
 
         // Subscribe to dice events
-        OldDice.Instance.OnDiceRolled += HandleDiceRolled;
         Dice.OnRoll += HandleDiceRolled;
 
         // Initiate units
@@ -100,7 +99,7 @@ public class Home : MonoBehaviour
 
         if (activeUnits.Count == 0 && endUnits.Count == 0 && roll != 6)
         {
-            TurnManager.Instance.EndTurn(false);
+            TurnManager.Instance.TurnDelay();
             return;
         }
         else if (roll == 6)
@@ -138,7 +137,7 @@ public class Home : MonoBehaviour
         }
 
         if (!endUnits.Any(unit => unit.CanBeSelected()) && activeUnits.Count == 0)
-            TurnManager.Instance.EndTurn(false);
+            TurnManager.Instance.TurnDelay();
     }
 
     private void DisableUnitSelection()

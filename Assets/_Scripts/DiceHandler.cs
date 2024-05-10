@@ -8,6 +8,7 @@ public class DiceHandler : MonoBehaviour
     [Header("Dice Settings")]
     [SerializeField] private int rollValue;
     [SerializeField] private Dice _diceRoller;
+    [SerializeField] private bool isRandom; 
 
     [Header("Button & Animation")]
     [SerializeField] private Button rollButton;
@@ -51,8 +52,6 @@ public class DiceHandler : MonoBehaviour
     private void HandleStateChange(GameStates state)
     {
         canSwipe = state == GameStates.ROLL;
-        // Set animator parameter if needed
-        // animator.SetBool("CanThrowDice", canSwipe);
     }
 
     private void Update()
@@ -84,10 +83,23 @@ public class DiceHandler : MonoBehaviour
 
             // Roll the dice with calculated force
             _diceRoller.SetRollForce(force);
-            _diceRoller.RollDie(rollValue);
+            RollDice();
         }
     }
 
+    private void RollDice()
+    {
+        if (isRandom)
+        {
+            //rollValue = Random.Range(1, 7);
+            _diceRoller.RollDie();
+        }
+        else
+        {
+            _diceRoller.RollDie(rollValue);
+        }
+        
+    }
     private void EnableDice(Home home)
     {
         canSwipe = true;
@@ -105,8 +117,8 @@ public class DiceHandler : MonoBehaviour
         return rollValue;
     }
 
-    private void RollDice()
+    /*private void RollDice()
     {
         _diceRoller.RollDie();
-    }
+    }*/
 }

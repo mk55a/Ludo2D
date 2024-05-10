@@ -47,6 +47,11 @@ public class GameManager : MonoBehaviour
             // Transition to selection state
             ChangeGameState(GameStates.ROLL);
         }
+        else if(currentState == GameStates.ROLL)
+        {
+            TurnManager.Instance.EndTurn(false);
+            ChangeGameState(GameStates.ROLL);
+        }
     }
 
     public void OnSelectionComplete()

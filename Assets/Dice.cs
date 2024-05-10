@@ -16,10 +16,9 @@ public class Dice : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private bool _usePhysics = true;
     [SerializeField] private float _rollDuration = 2f;
-    [SerializeField] private Vector2 _forceMin = new Vector2(0, 350);
-    [SerializeField] private Vector2 _forceMax = new Vector2(0, 450);
 
     private Vector2 rollForce;
+
     private static readonly int RollingAnimation = Animator.StringToHash("RollDice");
     private static readonly int[] ResultAnimations = {
         Animator.StringToHash("RollOnOne"),
@@ -78,11 +77,12 @@ public class Dice : MonoBehaviour
 
     private void FinishRolling()
     {
-        isRolling = false;
+        
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
         animator.SetTrigger(ResultAnimations[Result - 1]);
         OnRoll?.Invoke(Result);
+        isRolling = false;
     }
 
     private Vector2 GetRollForce()
