@@ -23,7 +23,7 @@ public class TileManager : MonoBehaviour
 
     public List<Tile> GetStartTile(Unit unit)
     {
-        return tiles.Where(tile => tile.GetTileColor() == ConvertColorToTileColor(unit.GetUnitColor()) && tile.GetTileType() == TileType.SAFE).ToList();
+        return tiles.Where(tile => tile.GetTileColor() == Helper.ConvertColorToTileColor(unit.GetUnitColor()) && tile.GetTileType() == TileType.SAFE).ToList();
     }
 
     public List<Tile> GetUnitsTileTraversal(Tile currentTile, int roll)
@@ -84,7 +84,7 @@ public class TileManager : MonoBehaviour
             foreach (Tile tile in tiles)
             {
                 if (tile.GetTileType() == TileType.END &&
-                    tile.GetTileColor() == ConvertColorToTileColor(unit.GetUnitColor()) &&
+                    tile.GetTileColor() == Helper.ConvertColorToTileColor(unit.GetUnitColor()) &&
                     tile.GetPositionIndex() > currentIndex &&
                     tile.GetPositionIndex() <= targetIndex)
                 {
@@ -217,7 +217,7 @@ public class TileManager : MonoBehaviour
         foreach (Tile tile in tiles)
         {
             int tilePosIndex = tile.GetPositionIndex();
-            if (tile.GetTileType() == TileType.END && tile.GetTileColor() == ConvertColorToTileColor(unit.GetUnitColor()) && tilePosIndex > currentIndex && tilePosIndex <= targetIndex)
+            if (tile.GetTileType() == TileType.END && tile.GetTileColor() == Helper.ConvertColorToTileColor(unit.GetUnitColor()) && tilePosIndex > currentIndex && tilePosIndex <= targetIndex)
             {
                 Debug.Log(tilePosIndex);
                 eligibleTiles.Add(tile);
@@ -233,23 +233,4 @@ public class TileManager : MonoBehaviour
         Debug.Log("Tile to traverse : " + traversalTiles.Count);
         return traversalTiles;
     }
-
-    //Can be in any script HelperClass.cs
-    public static TileColor ConvertColorToTileColor(Color color)
-    {
-        switch (color)
-        {
-            case Color.RED:
-                return TileColor.RED;
-            case Color.BLUE:
-                return TileColor.BLUE;
-            case Color.YELLOW:
-                return TileColor.YELLOW;
-            case Color.GREEN:
-                return TileColor.GREEN;
-            default:
-                throw new ArgumentException("Unknown color");
-        }
-    }
-
 }
