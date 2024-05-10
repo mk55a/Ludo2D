@@ -81,6 +81,127 @@ public class Home : MonoBehaviour
         }
     }
 
+    
+    private void ChangeTurn()
+    {
+        animator.SetTrigger("IsTurn");
+    }
+
+
+    private void HandleDiceRolled(int roll)
+    {
+        if (!isTurn)
+        {
+            DisableUnitSelection();
+            return;
+        }
+
+        //Debug.Log("Handling dice roll");
+
+        if(activeUnits.Count == 0 &&endUnits.Count==0 && roll != 6) // or also if active Units are close to end and this dice roll won't let it move. 
+        {
+            TurnManager.Instance.EndTurn(false);
+            return;
+        }
+        else if (roll == 6)
+        {
+            EnableHomeUnitSelection();
+            EnableActiveUnitSelection();
+        }
+        else
+        {
+            //Debug.Log("Enablign Active units");
+            EnableActiveUnitSelection();
+            EnableEndUnitSelection();
+        }
+
+        GameManager.Instance.OnRollComplete();
+    }
+
+    
+
+    
+    private void EnableHomeUnitSelection()
+    {
+        if (atHomeUnits.Count != 0)
+        {
+            foreach (var unit in atHomeUnits)
+            {
+                unit.EnableSelection();
+            }
+        }
+    }
+    
+    private void EnableActiveUnitSelection()
+    {
+        if (activeUnits.Count != 0)
+        {
+            foreach (var unit in activeUnits)
+            {
+                unit.EnableSelection();
+            }
+        }
+    }
+
+
+    private void EnableEndUnitSelection()
+    {
+        if (endUnits.Count != 0)
+        {
+            bool someUnitCanBeSelected = false;
+            foreach (var unit in endUnits)
+            {
+                if (unit.CanBeSelected())
+                {
+                    someUnitCanBeSelected = true;
+                    unit.EnableSelection();
+                }
+
+            }
+
+            if (!someUnitCanBeSelected && activeUnits.Count ==0)
+            {
+                TurnManager.Instance.EndTurn(false);
+            }
+        }
+    }
+
+    private void DisableUnitSelection()
+    {
+        if (atHomeUnits.Count != 0)
+        {
+            foreach (var unit in atHomeUnits)
+            {
+                unit.DisableSelection();
+            }
+        }
+
+        if (activeUnits.Count != 0)
+        {
+            foreach (var unit in activeUnits)
+            {
+                unit.DisableSelection();
+            }
+        }
+
+        if(endUnits.Count!= 0)
+        {
+            foreach(var unit in endUnits)
+            {
+                unit.DisableSelection();
+            }
+        }
+        GameManager.Instance.OnSelectionComplete();
+    }
+
+    public void ChangeTurn(bool newIsTurn)
+    {
+        isTurn = newIsTurn;
+        animator.SetBool("IsTurn", isTurn);
+    }
+
+
+
     // Handles unit state transition to HOME
     private void HandleUnitAtHome(Unit unit)
     {
@@ -135,103 +256,5 @@ public class Home : MonoBehaviour
         finishedUnits.Remove(unit);
         activeUnits.Remove(unit);
         atHomeUnits.Remove(unit);
-    }
-    private void ChangeTurn()
-    {
-        animator.SetTrigger("IsTurn");
-    }
-
-
-    private void HandleDiceRolled(int roll)
-    {
-        if (!isTurn)
-        {
-            DisableUnitSelection();
-            return;
-        }
-
-        //Debug.Log("Handling dice roll");
-
-        if(activeUnits.Count == 0 && roll != 6) // or also if active Units are close to end and this dice roll won't let it move. 
-        {
-            TurnManager.Instance.EndTurn(false);
-            return;
-        }
-        else if (roll == 6)
-        {
-            EnableHomeUnitSelection();
-            EnableActiveUnitSelection();
-        }
-        else
-        {
-            //Debug.Log("Enablign Active units");
-            EnableActiveUnitSelection();
-        }
-
-        GameManager.Instance.OnRollComplete();
-    }
-
-    
-
-    
-    private void EnableHomeUnitSelection()
-    {
-        if (atHomeUnits.Count != 0)
-        {
-            foreach (var unit in atHomeUnits)
-            {
-                
-                unit.EnableSelection();
-            }
-        }
-    }
-    
-    private void EnableActiveUnitSelection()
-    {
-        if (activeUnits.Count != 0)
-        {
-            bool someUnitCanBeSelected = false;
-            foreach (var unit in activeUnits)
-            {
-                if (unit.CanBeSelected())
-                {
-                    someUnitCanBeSelected = true; 
-                    unit.EnableSelection();
-                }
-                
-            }
-
-            if (!someUnitCanBeSelected)
-            {
-                TurnManager.Instance.EndTurn(false);
-            }
-        }
-    }
-
-
-    private void DisableUnitSelection()
-    {
-        if (atHomeUnits.Count != 0)
-        {
-            foreach (var unit in atHomeUnits)
-            {
-                unit.DisableSelection();
-            }
-        }
-
-        if (activeUnits.Count != 0)
-        {
-            foreach (var unit in activeUnits)
-            {
-                unit.DisableSelection();
-            }
-        }
-        GameManager.Instance.OnSelectionComplete();
-    }
-
-    public void ChangeTurn(bool newIsTurn)
-    {
-        isTurn = newIsTurn;
-        animator.SetBool("IsTurn", isTurn);
     }
 }

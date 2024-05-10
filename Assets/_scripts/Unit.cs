@@ -34,6 +34,7 @@ public class Unit : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
+
     private void Start()
     {
         tilesTraversed = new List<Tile>();
@@ -41,13 +42,6 @@ public class Unit : MonoBehaviour
         SetState(UnitState.HOME);
         currentTraversalIndex = 0;
         originalScale= transform.localScale;
-    }
-
-    private void Update()
-    {
-       
-
-        
     }
 
     public void SetState(UnitState newState)
@@ -87,6 +81,10 @@ public class Unit : MonoBehaviour
         {
             GetTilesToTraverse();
         }
+        else if(currentState == UnitState.ONEND)
+        {
+            GetEndTilesToTraverse();
+        }
 
         TraverseTiles();
     }
@@ -103,10 +101,16 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void UnitReachedEnd()
+    public void UnitFinished()
     {
         SetState(UnitState.FINISH);
     }
+
+    public void UnitIsOnEnd()
+    {
+        SetState(UnitState.ONEND);
+    }
+
     public void TraverseBackToHome()
     {
         canMove = true;
@@ -165,8 +169,8 @@ public class Unit : MonoBehaviour
         Debug.Log("Going to traverse tiles");
         canMove = true;
         StartCoroutine(TraversalTilesCoroutine());
- 
         OnTraversalComplete?.Invoke();
+
     }
 
     private IEnumerator TraversalTilesCoroutine()
@@ -221,7 +225,7 @@ public class Unit : MonoBehaviour
         tilesToBeTraversed[tilesToBeTraversed.Count - 1].AddUnit(this);
         tilesToBeTraversed.Clear();
         canMove = false;
-
+        
     }
 
     public void GetFirstTileOnBoard()
@@ -234,6 +238,15 @@ public class Unit : MonoBehaviour
         }
     }
     
+    public void GetEndTilesToTraverse()
+    {
+        tilesToBeTraversed = TileManager.Instance.GetUnitsEndTraversal(this);
+        foreach (var tile in tilesToBeTraversed)
+        {
+            Debug.LogError(tile.gameObject.name + " " + tile.GetPositionIndex());
+        }
+    }
+
     public void GetTilesToTraverse()
     {
         //tilesToBeTraversed = TileManager.Instance.GetUnitsTileTraversal(tilesTraversed[tilesTraversed.Count - 1], DiceHandler.Instance.GetDiceRoll());//OldDice.Instance.GetRoll());//, GetTilesTraversedCount()); 
@@ -259,6 +272,11 @@ public class Unit : MonoBehaviour
     public Color GetUnitColor()
     {
         return unitColor;
+    }
+
+    public UnitState GetUnitState()
+    {
+        return currentState;
     }
 
     public bool CanUnitMove()

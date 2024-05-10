@@ -112,8 +112,12 @@ public class Tile : MonoBehaviour
 
         if(GetTileColor() == TileManager.ConvertColorToTileColor(unit.GetUnitColor()) && GetTileType()==TileType.END && GetPositionIndex()==6)
         {
-            unit.UnitReachedEnd();
+            unit.UnitFinished();
         }
+        if(GetTileType() == TileType.END && unit.GetUnitState() != UnitState.ONEND)
+        {
+            unit.UnitIsOnEnd();
+        } 
     }
 
     public void RemoveUnit(Unit unit)
