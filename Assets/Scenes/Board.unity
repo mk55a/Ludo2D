@@ -3399,6 +3399,7 @@ MonoBehaviour:
   isRandom: 1
   rollButton: {fileID: 1674553905}
   animator: {fileID: 584754451}
+  diceText: {fileID: 1440903644}
   maxSwipeSpeed: 1000
   _forceMin: {x: -350, y: 350}
   _forceMax: {x: -450, y: 450}
@@ -6650,7 +6651,7 @@ GameObject:
   - component: {fileID: 1016173621}
   - component: {fileID: 1016173620}
   m_Layer: 5
-  m_Name: Image
+  m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10746,7 +10747,7 @@ GameObject:
   - component: {fileID: 1440903647}
   - component: {fileID: 1440903646}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: DiceInstructionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

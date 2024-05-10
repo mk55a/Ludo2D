@@ -128,7 +128,7 @@ public class TileManager : MonoBehaviour
             {
                 if (traversedTilesCount == 51 &&
                     tile.GetTileType() == TileType.END &&
-                    tile.GetTileColor() == ConvertColorToTileColor(unit.GetUnitColor()) &&
+                    tile.GetTileColor() == Helper.ConvertColorToTileColor(unit.GetUnitColor()) &&
                     tile.GetPositionIndex() <= (57 - traversedTilesCount) &&
                     tile.GetPositionIndex() > currentIndex &&
                     tile.GetPositionIndex() <= endDiceRoll)

@@ -66,7 +66,7 @@ public class Tile : MonoBehaviour
         unit.gameObject.transform.SetParent(gridLayoutContainer.transform);
         Debug.LogWarning(unit.gameObject.name + " added to " + GetPositionIndex());
 
-        if (GetTileColor() == TileManager.ConvertColorToTileColor(unit.GetUnitColor()) && GetTileType() == TileType.END && GetPositionIndex() == 6)
+        if (GetTileColor() == Helper.ConvertColorToTileColor(unit.GetUnitColor()) && GetTileType() == TileType.END && GetPositionIndex() == 6)
         {
             unit.UnitFinished();
         }

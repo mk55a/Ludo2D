@@ -13,6 +13,7 @@ public class DiceHandler : MonoBehaviour
     [Header("Button & Animation")]
     [SerializeField] private Button rollButton;
     [SerializeField] private Animator animator;
+    [SerializeField] private GameObject diceText; 
 
     [Header("Swipe Detection")]
     [SerializeField] private float maxSwipeSpeed = 1000f;
@@ -52,6 +53,7 @@ public class DiceHandler : MonoBehaviour
     private void HandleStateChange(GameStates state)
     {
         canSwipe = state == GameStates.ROLL;
+        diceText.SetActive(canSwipe);
     }
 
     private void Update()
@@ -103,11 +105,13 @@ public class DiceHandler : MonoBehaviour
     private void EnableDice(Home home)
     {
         canSwipe = true;
+        diceText.SetActive(canSwipe);
     }
 
     private void HandleRoll(int value)
     {
         canSwipe = false;
+        diceText.SetActive(canSwipe);
         Debug.LogError($"You Rolled a {value}");
         rollValue = value;
     }
